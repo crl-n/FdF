@@ -6,7 +6,7 @@
 #    By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 14:04:09 by cnysten           #+#    #+#              #
-#    Updated: 2022/03/07 15:30:50 by cnysten          ###   ########.fr        #
+#    Updated: 2022/03/07 21:25:58 by carlnysten       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,17 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
-INCL = -I/usr/local/include
-
+ifneq ("$(wildcard /usr/local/lib/libmlx.a)", "")
 LIB = -L/usr/local/lib -lmlx
+else
+LIB = -L/usr/X11/lib -lmlx
+endif
+
+ifneq ("$(wildcard /usr/local/include/mlx.h)", "")
+INCL = -I/usr/local/include
+else
+INCL = -I/usr/X11/include
+endif
 
 LINK = -framework OpenGL -framework AppKit
 
@@ -33,6 +41,9 @@ $(OBJ): $(SRC)
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIB) $(LINK)
+
+home: $(OBJ)
+	$(CC) $(CFLAGS) -c $(SRC) $(INCL)
 
 debug: $(OBJ)
 	$(CC) $(CFLAGS) -g -o $(NAME) $(OBJ) $(LIB) $(LINK)
