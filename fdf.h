@@ -3,32 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/07 16:43:25 by cnysten           #+#    #+#             */
-/*   Updated: 2022/03/10 09:18:47 by carlnysten       ###   ########.fr       */
+/*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
+/*   Updated: 2022/03/10 09:25:25 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# define USAGE "Usage : ./fdf <filename> [ case_size z_size ]\n"
-
-typedef struct s_mlx
-{
-	void	*mlx_ptr;
-	void	*window;
-	int		**points;
-} t_mlx;
+# define USAGE "Usage : ./fdf <filename>\n"
+# define WIDTH 600
+# define HEIGHT 400
 
 typedef struct s_vars
 {
-	int	x;
-	int	y;
-	void	*mlx;
 	void	*win;
-}	t_vars;
+	void	*mlx;
+} t_vars;
+
+typedef struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+} t_img;
+
+typedef struct s_win
+{
+	void	*window;
+	int		width;
+	int		height;
+} t_win;
 
 typedef struct s_line
 {
