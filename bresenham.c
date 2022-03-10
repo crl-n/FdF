@@ -1,6 +1,7 @@
 #include <mlx.h>
 #include <math.h>
 #include <stdlib.h>
+#include "fdf.h"
 
 // line equation: mx + b
 //TODO Split up into several functions and norm fix
@@ -11,7 +12,6 @@ void	draw_line(void *mlx, void *win, t_line *line)
 	int x = line->x0;
 	int y = line->y0;
 
-	printf("dy %f dx %f\n", line->dy, line->dx);
 	//TODO: If dx == 0
 	if (line->m < 1 && line->m > -1)
 	{
@@ -20,7 +20,6 @@ void	draw_line(void *mlx, void *win, t_line *line)
 			mlx_pixel_put(mlx, win, x, y, 0xFFFFFF);
 			x += line->sx;
 			offset += fabs(line->m);
-			printf("ofs %f thr %f\n", offset, threshold);
 			if (offset > threshold)
 			{
 				y += line->sy;

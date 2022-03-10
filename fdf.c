@@ -6,13 +6,13 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:21:23 by cnysten           #+#    #+#             */
-/*   Updated: 2022/03/08 19:28:02 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/03/10 10:33:33 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mlx.h>
 #include <stdlib.h>
-//#include <stdio.h> //remove
+#include <stdio.h> //remove
 #include <fcntl.h>
 #include "fdf.h"
 #include "libft.h"
@@ -30,35 +30,64 @@ t_list	*read_lines(int fd)
 	t_list	*node;
 	char	*line;
 	int		gnl_ret;
-	int		line_len;
 
-	gnl_ret = get_next_line(fd, &line);
-	if (gnl_ret < 0)
-		die("Get next line error.");
-	line_len = gnl_ret;
 	while (1)
 	{
 		gnl_ret = get_next_line(fd, &line);
 		if (gnl_ret == 0)
 			break ;
-		if (gnl_ret < 0 || gnl_ret != line_len)
+		if (gnl_ret < 0)
 			die("Get next line error.");
 		node = ft_lstnew(NULL, 0);
 		node->content = line;
 		node->content_size = ft_strlen(line) + 1;
-		ft_strdel(&line);
 		ft_lstadd_back(&lines, node);
 	}
 	return (lines);
 }
 
-int	**parse_lines(t_list *lines)
+int	**init_points(int n_rows, int n_cols)
 {
-	(void) lines;
-	return (NULL);
+
+
 }
 
-int	**points_from_file(char *filename)
+int	**parse_lines(t_list *lines)
+{
+	int		**points;
+	char	**split;
+	int		n_cols;
+	size_t	n_rows;
+	int		i = 0;
+	//int		j = 0;
+	int		k = 0;
+
+	split = ft_strsplit(lines->content, ' ');
+	n_rows = ft_lstsize(lines);
+	n_cols = 0;
+	while (split[n_cols])
+		n_cols++;
+	printf("number of columns %d\n", n_cols);
+	printf("number of rows %zu\n", n_rows);
+	points = (int **) malloc(n_rows * sizeof (int *) + n_cols * sizeof (int));
+	if (!points)
+		die("Malloc failed");
+	while (split[i])
+		points[0][k++] = ft_atoi(split[i++]);
+	return (points);
+}
+
+//Debug
+void	print_lines(t_list *lines)
+{
+	while (lines)
+	{
+		printf("%s\n", (char *)lines->content);
+		lines = lines->next;
+	}
+}
+
+int	**points_from_file(char *filename, t_vars *vars)
 {
 	int		fd;
 	t_list	*lines;
@@ -68,11 +97,12 @@ int	**points_from_file(char *filename)
 	if (fd < 0)
 		die(USAGE);
 	lines = read_lines(fd);
+	print_lines(lines);
 	points = parse_lines(lines);
 	return (points);
 }
 
-int	key_event(int keycode, t_vars vars)
+int	key_event(int keycode, t_vars vars) // Should t_vars be t_vars *?
 {
 	//printf("%#x\n", keycode);
 	if (keycode == 0x35)
@@ -83,29 +113,22 @@ int	key_event(int keycode, t_vars vars)
 	return (0);
 }
 
-int	main(int argc, char **argv)
-{
+int	main(int argc, char **argv) {
 	t_vars	vars;
 	t_win	win;
-	t_img	img;
 	int		**points;
 
-	(void) argv;
 	(void) points;
 	if (argc != 2)
 	{
 		ft_putstr(USAGE);
 		return (0);
 	}
-	//points = points_from_file(argv[1]);
+	points = points_from_file(argv[1], &vars);
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, WIDTH, HEIGHT, "fdf");
 	win.width = WIDTH;
 	win.height = HEIGHT;
-	img.img = mlx_new_image(vars.mlx, WIDTH, HEIGHT);
-	img.addr = mlx_get_data_addr(vars.win, &(img.bits_per_pixel), &(img.line_length), &(img.endian));
-	mlx_pixel_put(vars.mlx, vars.win, 50, 50, 0x00ff0000);
-	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
 	vars.win = &win;
 	mlx_key_hook(vars.win, key_event, &vars);
 	mlx_loop(vars.mlx);

@@ -34,7 +34,7 @@ all: $(NAME)
 
 $(OBJ): $(SRC)
 	make -C ./libft
-	$(CC) $(CFLAGS) -c $(SRC) $(INCL)
+	$(CC) $(CFLAGS) -c $(SRC) $(INCL) -g
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIB) $(FW)
