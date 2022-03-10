@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 16:43:25 by cnysten           #+#    #+#             */
-/*   Updated: 2022/03/07 22:00:13 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/10 09:18:47 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,26 @@ typedef struct s_mlx
 	void	*window;
 	int		**points;
 } t_mlx;
+
+typedef struct s_vars
+{
+	int	x;
+	int	y;
+	void	*mlx;
+	void	*win;
+}	t_vars;
+
+typedef struct s_line
+{
+	int		x0;
+	int		y0;
+	int		x1;
+	int		y1;
+	double	dx;
+	double	dy;
+	int		sx;
+	int		sy;
+	double	m;
+}	t_line;
 
 #endif

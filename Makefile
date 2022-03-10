@@ -6,7 +6,7 @@
 #    By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 14:04:09 by cnysten           #+#    #+#              #
-#    Updated: 2022/03/07 21:25:58 by carlnysten       ###   ########.fr        #
+#    Updated: 2022/03/10 09:19:32 by carlnysten       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ endif
 
 LINK = -framework OpenGL -framework AppKit
 
-SRC = fdf.c
+SRC = fdf.c bresenham.c
 
 OBJ = $(SRC:%.c=%.o)
 
