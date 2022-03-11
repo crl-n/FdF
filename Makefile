@@ -24,7 +24,7 @@ INCL += -I./libft
 
 FW = -framework OpenGL -framework AppKit
 
-SRC = fdf.c bresenham.c
+SRC = fdf.c parse.c draw_line.c control.c
 
 OBJ = $(SRC:%.c=%.o)
 

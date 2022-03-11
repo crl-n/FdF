@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/10 09:25:25 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/11 15:04:50 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,10 @@ typedef struct s_line
 	int		sy;
 	double	m;
 }	t_line;
+
+int		**points_from_file(char *filename, t_vars *vars);
+void	draw_line(void *mlx, void *win, t_line *line);
+void	die(char *message);
+int		key_event(int keycode, t_vars vars); // Should t_vars be t_vars *?
 
 #endif
