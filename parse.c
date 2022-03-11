@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:46:41 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/11 15:02:09 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/11 16:14:58 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	**int_array_2d(int n_rows, int n_cols)
 	return (points);
 }
 
-static int	**parse_lines(t_list *lines)
+static int	**parse_lines(t_list *lines, t_vars *vars)
 {
 	int		**points;
 	char	**split;
@@ -83,6 +83,8 @@ static int	**parse_lines(t_list *lines)
 	n_cols = 0;
 	while (split[n_cols])
 		n_cols++;
+	vars->n_rows = n_rows;
+	vars->n_cols = n_cols;
 	printf("number of columns %d\n", n_cols); //DEBUG
 	printf("number of rows %zu\n", n_rows); //DEBUG
 	points = int_array_2d(n_rows, n_cols);
@@ -128,7 +130,7 @@ int	**points_from_file(char *filename, t_vars *vars)
 		die(USAGE);
 	lines = read_lines(fd);
 	print_lines(lines);
-	points = parse_lines(lines);
+	points = parse_lines(lines, vars);
 	ft_lstdel(&lines, del);
 	return (points);
 }

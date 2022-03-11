@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/11 15:04:50 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/11 16:31:43 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ typedef struct s_vars
 {
 	void	*win;
 	void	*mlx;
+	int		n_rows;
+	int		n_cols;
 } t_vars;
 
 typedef struct s_img
@@ -39,6 +41,13 @@ typedef struct s_win
 	int		height;
 } t_win;
 
+typedef struct s_point
+{
+	int	x;
+	int	y;
+	int	z;
+}	t_point;
+
 typedef struct s_line
 {
 	int		x0;
@@ -55,6 +64,7 @@ typedef struct s_line
 int		**points_from_file(char *filename, t_vars *vars);
 void	draw_line(void *mlx, void *win, t_line *line);
 void	die(char *message);
-int		key_event(int keycode, t_vars vars); // Should t_vars be t_vars *?
+int		key_event(int keycode, t_vars *vars);
+t_line	*new_line(int x0, int y0, int x1, int y1);
 
 #endif
