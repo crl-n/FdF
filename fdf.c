@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:21:23 by cnysten           #+#    #+#             */
-/*   Updated: 2022/03/11 18:27:33 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/11 19:27:03 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	draw(t_vars *vars, int **points)
 		j = 1;
 		while (j < vars->n_cols)
 		{
-			line = new_line(j - 1, i, j, i);
+			line = new_line(j - 1, i, j, i, vars);
 			draw_line(vars->mlx, vars->win, line);
 			j++;
 		}
@@ -47,7 +47,7 @@ void	draw(t_vars *vars, int **points)
 		j = 0;
 		while (j < vars->n_cols)
 		{
-			line = new_line(j, i - 1, j, i);
+			line = new_line(j, i - 1, j, i, vars);
 			draw_line(vars->mlx, vars->win, line);
 			j++;
 		}

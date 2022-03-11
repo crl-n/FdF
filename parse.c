@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:46:41 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/11 16:14:58 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/11 19:28:28 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ static int	**parse_lines(t_list *lines, t_vars *vars)
 		n_cols++;
 	vars->n_rows = n_rows;
 	vars->n_cols = n_cols;
+	vars->x_scale = WIDTH / n_cols;
+	vars->y_scale = HEIGHT / n_rows;
 	printf("number of columns %d\n", n_cols); //DEBUG
 	printf("number of rows %zu\n", n_rows); //DEBUG
 	points = int_array_2d(n_rows, n_cols);

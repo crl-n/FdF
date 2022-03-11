@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/11 16:31:43 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/11 19:26:17 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ typedef struct s_vars
 	void	*mlx;
 	int		n_rows;
 	int		n_cols;
+	int		x_scale;
+	int		y_scale;
 } t_vars;
 
 typedef struct s_img
@@ -65,6 +67,6 @@ int		**points_from_file(char *filename, t_vars *vars);
 void	draw_line(void *mlx, void *win, t_line *line);
 void	die(char *message);
 int		key_event(int keycode, t_vars *vars);
-t_line	*new_line(int x0, int y0, int x1, int y1);
+t_line	*new_line(int x0, int y0, int x1, int y1, t_vars *vars);
 
 #endif
