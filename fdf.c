@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:21:23 by cnysten           #+#    #+#             */
-/*   Updated: 2022/03/11 16:28:56 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/11 18:27:33 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,19 @@ void	draw(t_vars *vars, int **points)
 		j = 1;
 		while (j < vars->n_cols)
 		{
-			line = new_line(i, j - 1, i, j);
+			line = new_line(j - 1, i, j, i);
+			draw_line(vars->mlx, vars->win, line);
+			j++;
+		}
+		i++;
+	}
+	i = 1;
+	while (i < vars->n_rows)
+	{
+		j = 0;
+		while (j < vars->n_cols)
+		{
+			line = new_line(j, i - 1, j, i);
 			draw_line(vars->mlx, vars->win, line);
 			j++;
 		}
@@ -45,7 +57,6 @@ void	draw(t_vars *vars, int **points)
 
 int	main(int argc, char **argv) {
 	t_vars	*vars;
-	t_win	*win;
 	int		**points;
 
 	if (argc != 2)
@@ -54,12 +65,9 @@ int	main(int argc, char **argv) {
 		return (0);
 	}
 	vars = (t_vars *) malloc(sizeof (t_vars));
-	win = (t_win *) malloc(sizeof (t_win));
 	points = points_from_file(argv[1], vars);
 	vars->mlx = mlx_init();
 	vars->win = mlx_new_window(vars->mlx, WIDTH, HEIGHT, "fdf");
-	win->width = WIDTH;
-	win->height = HEIGHT;
 	draw(vars, points);
 	mlx_key_hook(vars->win, key_event, vars);
 	mlx_loop(vars->mlx);
