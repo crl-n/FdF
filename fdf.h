@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/13 12:18:43 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/13 12:29:58 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_point
 {
 	int	x;
 	int	y;
+	int	color;
 }	t_point;
 
 typedef struct s_line
