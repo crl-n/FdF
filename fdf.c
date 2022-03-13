@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:21:23 by cnysten           #+#    #+#             */
-/*   Updated: 2022/03/13 20:36:55 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/13 23:37:38 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,33 @@ void	die(char *message)
 	exit(0);
 }
 
-t_point	*point(int x, int y, int z)
+double	normalise(double value, t_vars *vars)
+{
+	if (value < vars->origin)
+		return (((double) vars->origin - value) / vars->origin * -1.0);
+	return ((value - (double) vars->origin) / vars->origin);
+}
+
+t_point	*point(int x, int y, int z, t_vars *vars)
 {
 	t_point	*p;
+	double	nx;
+	double	ny;
+	double	nz;
 
-	x *= 10;
-	y *= 10;
-	z *= 10;
 	p = (t_point *) malloc(sizeof (t_point));
 	if (!p)
 		die("Couldn't allocate memory for point.");
-	p->x = (x - y) * cos(0.52356);
-	p->y = - z + (x + y) * sin(0.52356);
-	p->z = z;
+	nx = normalise(x, vars);
+	ny = normalise(y, vars);
+	nz = normalise(z, vars);
+	p->x = (nx - ny) * cos(0.52356);
+	p->y = (nx + ny) * sin(0.52356) - nz * 0.4;
+	p->z = nz;
+	printf("%d\n", vars->origin);
+	printf("%d %d %d\n", x, y, z);
+	printf("%f %f %f\n", nx, ny, nz);
+	printf("%f %f %f\n", p->x, p->y, p->z);
 	return (p);
 }
 
@@ -56,12 +70,12 @@ void	draw(t_vars *vars, int **arr)
 		{
 			if (j > 0)
 			{
-				l = line(point(j - 1, i, arr[i][j - 1]), point(j, i, arr[i][j]), vars);
+				l = line(point(j - 1, i, arr[i][j - 1], vars), point(j, i, arr[i][j], vars), vars);
 				draw_line(vars->mlx, vars->win, l);
 			}
 			if (i > 0)
 			{
-				l = line(point(j, i - 1, arr[i - 1][j]), point(j, i, arr[i][j]), vars);
+				l = line(point(j, i - 1, arr[i - 1][j], vars), point(j, i, arr[i][j], vars), vars);
 				draw_line(vars->mlx, vars->win, l);
 			}
 			j++;

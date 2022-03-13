@@ -6,13 +6,14 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:46:41 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/13 20:32:22 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/13 22:39:03 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h> //REMOVE
 #include <fcntl.h>
+#include <unistd.h>
 #include "fdf.h"
 #include "libft.h"
 #include "get_next_line.h"
@@ -83,6 +84,7 @@ static void	set_vars(int n_rows, int n_cols, t_vars *vars)
 		vars->scale = WIDTH / n;
 	else
 		vars->scale = HEIGHT / n;
+	vars->max = n;
 }
 
 static int	get_n_cols(char **split)
@@ -95,15 +97,12 @@ static int	get_n_cols(char **split)
 	return (n_cols);
 }
 
-static int	**parse_lines(t_list *lines, t_vars *vars)
+static int	**parse_lines(t_list *lines, t_vars *vars, int **arr, char **split)
 {
-	int		**arr;
-	char	**split;
 	int		i;
 	int		j;
 	int		k;
 
-	arr = NULL;
 	j = 0;
 	while (lines)
 	{
@@ -118,7 +117,11 @@ static int	**parse_lines(t_list *lines, t_vars *vars)
 			arr = int_array_2d(vars->n_rows, vars->n_cols);
 		}
 		while (split[i])
+		{
 			arr[j][k++] = ft_atoi(split[i++]);
+			if (abs(arr[j][k - 1]) > vars->max)
+				vars->max = abs(arr[j][k - 1]);
+		}
 		free(split);
 		j++;
 		lines = lines->next;
@@ -147,7 +150,9 @@ int	**arr_from_file(char *filename, t_vars *vars)
 		die(USAGE);
 	lines = read_lines(fd);
 	print_lines(lines);
-	arr = parse_lines(lines, vars);
+	arr = parse_lines(lines, vars, NULL, NULL);
 	ft_lstdel(&lines, del);
+	vars->origin = vars->max / 2;
+	close(fd);
 	return (arr);
 }
