@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/11 19:26:17 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/13 12:18:43 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ typedef struct s_vars
 	void	*mlx;
 	int		n_rows;
 	int		n_cols;
-	int		x_scale;
-	int		y_scale;
+	int		scale;
 } t_vars;
 
 typedef struct s_img
@@ -47,7 +46,6 @@ typedef struct s_point
 {
 	int	x;
 	int	y;
-	int	z;
 }	t_point;
 
 typedef struct s_line

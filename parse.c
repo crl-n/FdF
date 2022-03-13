@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:46:41 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/11 19:28:28 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/13 12:11:42 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,38 +68,55 @@ static int	**int_array_2d(int n_rows, int n_cols)
 	return (points);
 }
 
+// Sets the dimension variables in the vars struct
+static void	set_vars(int n_rows, int n_cols, t_vars *vars)
+{
+	int	n;
+
+	vars->n_rows = n_rows;
+	vars->n_cols = n_cols;
+	if (n_rows > n_cols)
+		n = n_rows;
+	else
+		n = n_cols;
+	if (WIDTH > HEIGHT)
+		vars->scale = WIDTH / n;
+	else
+		vars->scale = HEIGHT / n;
+}
+
+static int	get_n_cols(char **split)
+{
+	int	n_cols;
+
+	n_cols = 0;
+	while (split[n_cols])
+		n_cols++;
+	return (n_cols);
+}
+
 static int	**parse_lines(t_list *lines, t_vars *vars)
 {
 	int		**points;
 	char	**split;
-	int		n_cols;
-	size_t	n_rows;
-	int		i = 0;
-	int		j = 0;
-	int		k = 0;
+	int		i;
+	int		j;
+	int		k;
 
-	split = ft_strsplit(lines->content, ' ');
-	n_rows = ft_lstsize(lines);
-	n_cols = 0;
-	while (split[n_cols])
-		n_cols++;
-	vars->n_rows = n_rows;
-	vars->n_cols = n_cols;
-	vars->x_scale = WIDTH / n_cols;
-	vars->y_scale = HEIGHT / n_rows;
-	printf("number of columns %d\n", n_cols); //DEBUG
-	printf("number of rows %zu\n", n_rows); //DEBUG
-	points = int_array_2d(n_rows, n_cols);
-	while (split[i])
-		points[0][k++] = ft_atoi(split[i++]);
-	free(split);
-	lines = lines->next;
-	j = 1;
+	points = NULL;
+	j = 0;
 	while (lines)
 	{
 		i = 0;
 		k = 0;
 		split = ft_strsplit(lines->content, ' ');
+		if (j == 0)
+		{
+			set_vars(ft_lstsize(lines), get_n_cols(split), vars);
+			printf("number of columns %d\n", vars->n_cols); //DEBUG
+			printf("number of rows %d\n", vars->n_rows); //DEBUG
+			points = int_array_2d(vars->n_rows, vars->n_cols);
+		}
 		while (split[i])
 			points[j][k++] = ft_atoi(split[i++]);
 		free(split);
@@ -119,14 +136,12 @@ void	print_lines(t_list *lines)
 	}
 }
 
-// Does it need vars?
 int	**points_from_file(char *filename, t_vars *vars)
 {
 	int		fd;
 	t_list	*lines;
 	int		**points;
 
-	(void) vars;
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		die(USAGE);

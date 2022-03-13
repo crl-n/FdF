@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:21:23 by cnysten           #+#    #+#             */
-/*   Updated: 2022/03/11 19:27:03 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/13 12:29:00 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,20 @@ void	die(char *message)
 	exit(0);
 }
 
+t_point	*new_point(int *coords)
+{
+	t_point	*point;
+
+	point = (t_point *) malloc(sizeof (t_point));
+	if (!point)
+		die("Couldn't allocate memory for point.");
+	point->y = coords[0];
+	point->x = coords[1];
+	return (point);
+}
+
+// Iterates over 3D vertices, applies projection to each point and
+// draws lines between adjacent points.
 void	draw(t_vars *vars, int **points)
 {
 	int		i;

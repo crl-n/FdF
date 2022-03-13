@@ -51,10 +51,10 @@ t_line	*new_line(int x0, int y0, int x1, int y1, t_vars *vars)
 	line = (t_line *) malloc(sizeof (t_line));
 	if (!line)
 		return (NULL);
-	line->x0 = x0 * vars->x_scale;
-	line->y0 = y0 * vars->y_scale;
-	line->x1 = x1 * vars->x_scale;
-	line->y1 = y1 * vars->y_scale;
+	line->x0 = x0 * vars->scale;
+	line->y0 = y0 * vars->scale;
+	line->x1 = x1 * vars->scale;
+	line->y1 = y1 * vars->scale;
 	line->dx = fabs((double) x1 - (double) x0);
 	line->dy = fabs((double) y1 - (double) y0);
 	line->sx = 1;
