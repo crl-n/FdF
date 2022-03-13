@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:46:41 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/13 12:11:42 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/13 20:32:22 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,24 @@ static t_list	*read_lines(int fd)
 // Allocates and initialises
 static int	**int_array_2d(int n_rows, int n_cols)
 {
-	int		**points;
+	int		**arr;
 	int		*cells;
 	int		i;
 	size_t	size;
 
 	size = n_rows * sizeof (int *) + n_cols * sizeof (int);
-	points = (int **) malloc(size);
-	if (!points)
+	arr = (int **) malloc(size);
+	if (!arr)
 		die("Malloc fail.");
-	ft_bzero(points, size);
-	cells = (int *)(points + n_rows);
+	ft_bzero(arr, size);
+	cells = (int *)(arr + n_rows);
 	i = 0;
 	while (i < n_rows)
 	{
-		points[i] = cells + i * n_cols;
+		arr[i] = cells + i * n_cols;
 		i++;
 	}
-	return (points);
+	return (arr);
 }
 
 // Sets the dimension variables in the vars struct
@@ -97,13 +97,13 @@ static int	get_n_cols(char **split)
 
 static int	**parse_lines(t_list *lines, t_vars *vars)
 {
-	int		**points;
+	int		**arr;
 	char	**split;
 	int		i;
 	int		j;
 	int		k;
 
-	points = NULL;
+	arr = NULL;
 	j = 0;
 	while (lines)
 	{
@@ -115,15 +115,15 @@ static int	**parse_lines(t_list *lines, t_vars *vars)
 			set_vars(ft_lstsize(lines), get_n_cols(split), vars);
 			printf("number of columns %d\n", vars->n_cols); //DEBUG
 			printf("number of rows %d\n", vars->n_rows); //DEBUG
-			points = int_array_2d(vars->n_rows, vars->n_cols);
+			arr = int_array_2d(vars->n_rows, vars->n_cols);
 		}
 		while (split[i])
-			points[j][k++] = ft_atoi(split[i++]);
+			arr[j][k++] = ft_atoi(split[i++]);
 		free(split);
 		j++;
 		lines = lines->next;
 	}
-	return (points);
+	return (arr);
 }
 
 //Debug, REMOVE
@@ -136,18 +136,18 @@ void	print_lines(t_list *lines)
 	}
 }
 
-int	**points_from_file(char *filename, t_vars *vars)
+int	**arr_from_file(char *filename, t_vars *vars)
 {
 	int		fd;
 	t_list	*lines;
-	int		**points;
+	int		**arr;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		die(USAGE);
 	lines = read_lines(fd);
 	print_lines(lines);
-	points = parse_lines(lines, vars);
+	arr = parse_lines(lines, vars);
 	ft_lstdel(&lines, del);
-	return (points);
+	return (arr);
 }

@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:21:23 by cnysten           #+#    #+#             */
-/*   Updated: 2022/03/13 18:51:22 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/13 20:36:55 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ t_point	*point(int x, int y, int z)
 
 // Iterates over 3D vertices, applies projection to each point and
 // draws lines between adjacent points.
-void	draw(t_vars *vars, int **points)
+void	draw(t_vars *vars, int **arr)
 {
 	int		i;
 	int		j;
 	t_line	*l;
 
-	(void) points;
+	(void) arr;
 	i = 0;
 	while (i < vars->n_rows)
 	{
@@ -56,12 +56,12 @@ void	draw(t_vars *vars, int **points)
 		{
 			if (j > 0)
 			{
-				l = line(point(j - 1, i, points[i][j - 1]), point(j, i, points[i][j]), vars);
+				l = line(point(j - 1, i, arr[i][j - 1]), point(j, i, arr[i][j]), vars);
 				draw_line(vars->mlx, vars->win, l);
 			}
 			if (i > 0)
 			{
-				l = line(point(j, i - 1, points[i - 1][j]), point(j, i, points[i][j]), vars);
+				l = line(point(j, i - 1, arr[i - 1][j]), point(j, i, arr[i][j]), vars);
 				draw_line(vars->mlx, vars->win, l);
 			}
 			j++;
@@ -70,9 +70,10 @@ void	draw(t_vars *vars, int **points)
 	}
 }
 
-int	main(int argc, char **argv) {
+int	main(int argc, char **argv)
+{
 	t_vars	*vars;
-	int		**points;
+	int		**arr;
 
 	if (argc != 2)
 	{
@@ -80,10 +81,10 @@ int	main(int argc, char **argv) {
 		return (0);
 	}
 	vars = (t_vars *) malloc(sizeof (t_vars));
-	points = points_from_file(argv[1], vars);
+	arr = arr_from_file(argv[1], vars);
 	vars->mlx = mlx_init();
 	vars->win = mlx_new_window(vars->mlx, WIDTH, HEIGHT, "fdf");
-	draw(vars, points);
+	draw(vars, arr);
 	mlx_key_hook(vars->win, key_event, vars);
 	mlx_loop(vars->mlx);
 	return (0);

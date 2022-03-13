@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/13 18:30:24 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/13 20:34:11 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,6 @@ typedef struct s_vars
 	int		a_ratio;
 	int		fov;
 } t_vars;
-
-typedef struct s_img
-{
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-} t_img;
 
 typedef struct s_win
 {
@@ -65,7 +56,7 @@ typedef struct s_line
 	double	m;
 }	t_line;
 
-int		**points_from_file(char *filename, t_vars *vars);
+int		**arr_from_file(char *filename, t_vars *vars);
 void	draw_line(void *mlx, void *win, t_line *line);
 void	die(char *message);
 int		key_event(int keycode, t_vars *vars);
