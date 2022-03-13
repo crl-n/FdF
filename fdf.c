@@ -6,13 +6,14 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:21:23 by cnysten           #+#    #+#             */
-/*   Updated: 2022/03/13 12:59:13 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/13 18:51:22 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mlx.h>
 #include <stdlib.h>
 #include <stdio.h> //remove
+#include <math.h>
 #include "fdf.h"
 #include "libft.h"
 
@@ -22,16 +23,20 @@ void	die(char *message)
 	exit(0);
 }
 
-t_point	*new_point(int *coords)
+t_point	*point(int x, int y, int z)
 {
-	t_point	*point;
+	t_point	*p;
 
-	point = (t_point *) malloc(sizeof (t_point));
-	if (!point)
+	x *= 10;
+	y *= 10;
+	z *= 10;
+	p = (t_point *) malloc(sizeof (t_point));
+	if (!p)
 		die("Couldn't allocate memory for point.");
-	point->y = coords[0];
-	point->x = coords[1];
-	return (point);
+	p->x = (x - y) * cos(0.52356);
+	p->y = - z + (x + y) * sin(0.52356);
+	p->z = z;
+	return (p);
 }
 
 // Iterates over 3D vertices, applies projection to each point and
@@ -40,7 +45,7 @@ void	draw(t_vars *vars, int **points)
 {
 	int		i;
 	int		j;
-	t_line	*line;
+	t_line	*l;
 
 	(void) points;
 	i = 0;
@@ -51,13 +56,13 @@ void	draw(t_vars *vars, int **points)
 		{
 			if (j > 0)
 			{
-				line = new_line(j - 1, i, j, i, vars);
-				draw_line(vars->mlx, vars->win, line);
+				l = line(point(j - 1, i, points[i][j - 1]), point(j, i, points[i][j]), vars);
+				draw_line(vars->mlx, vars->win, l);
 			}
 			if (i > 0)
 			{
-				line = new_line(j, i - 1, j, i, vars);
-				draw_line(vars->mlx, vars->win, line);
+				l = line(point(j, i - 1, points[i - 1][j]), point(j, i, points[i][j]), vars);
+				draw_line(vars->mlx, vars->win, l);
 			}
 			j++;
 		}

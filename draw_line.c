@@ -17,7 +17,7 @@ void	draw_line(void *mlx, void *win, t_line *line)
 	{
 		while (x != line->x1)
 		{
-			mlx_pixel_put(mlx, win, x, y, 0xFFFFFF);
+			mlx_pixel_put(mlx, win, x + 100, y + 100, 0xFFFFFF);
 			x += line->sx;
 			offset += fabs(line->m);
 			if (offset > threshold)
@@ -31,7 +31,7 @@ void	draw_line(void *mlx, void *win, t_line *line)
 	{
 		while (y != line->y1)
 		{
-			mlx_pixel_put(mlx, win, x, y, 0xFFFFFF);
+			mlx_pixel_put(mlx, win, x + 100, y + 100, 0xFFFFFF);
 			y += line->sy;
 			offset += fabs(1/line->m);
 			if (offset > threshold)
@@ -44,25 +44,28 @@ void	draw_line(void *mlx, void *win, t_line *line)
 	free(line);
 }
 
-t_line	*new_line(int x0, int y0, int x1, int y1, t_vars *vars)
+t_line	*line(t_point *a, t_point * b, t_vars *vars)
 {
 	t_line	*line;
 
+	(void) vars;
 	line = (t_line *) malloc(sizeof (t_line));
 	if (!line)
 		return (NULL);
-	line->x0 = x0 * vars->scale;
-	line->y0 = y0 * vars->scale;
-	line->x1 = x1 * vars->scale;
-	line->y1 = y1 * vars->scale;
-	line->dx = fabs((double) x1 - (double) x0);
-	line->dy = fabs((double) y1 - (double) y0);
+	line->x0 = a->x;
+	line->y0 = a->y;
+	line->x1 = b->x;
+	line->y1 = b->y;
+	line->dx = fabs((double) line->x1 - (double) line->x0);
+	line->dy = fabs((double) line->y1 - (double) line->y0);
 	line->sx = 1;
 	line->sy = 1;
-	if (x0 > x1)
+	if (line->x0 > line->x1)
 		line->sx = -1;
-	if (y0 > y1)
+	if (line->y0 > line->y1)
 		line->sy = -1;
 	line->m = (double) line->dy / line->dx; //TODO: division by zero
+	free(a);
+	free(b);
 	return (line);
 }
