@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:21:23 by cnysten           #+#    #+#             */
-/*   Updated: 2022/03/14 11:44:19 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/14 21:36:24 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,27 @@ void	die(char *message)
 	exit(0);
 }
 
-double	normalise(double value, t_vars *vars)
+void	project(t_point **arr, t_vars *vars)
 {
-	if (value < vars->origin)
-		return (((double) vars->origin - value) / vars->origin * -1.0);
-	return ((value - (double) vars->origin) / vars->origin);
+	int		i;
+	t_point	*p;
+
+	i = 0;
+	while (i < vars->n_rows * vars->n_cols)
+	{
+		p = arr[i++];
+		if (vars->iso)
+		{
+			p->px = (p->x - p->y) * cos(0.52356);
+			p->py = (p->x + p->y) * sin(0.52356) - p->z * 0.4;
+			p->pz = p->z;
+		}
+		p->px *= vars->zoom;
+		p->py *= vars->zoom;
+		p->px += vars->pan_x;
+		p->py += vars->pan_y;
+		printf("x %f y %f\n", p->x, p->y);
+	}
 }
 
 t_point	*point(int x, int y, int z, t_vars *vars)
@@ -37,74 +53,19 @@ t_point	*point(int x, int y, int z, t_vars *vars)
 	p = (t_point *) malloc(sizeof (t_point));
 	if (!p)
 		die("Couldn't allocate memory for point.");
-	p->x = (x - y) * cos(0.52356);
-	p->y = (x + y) * sin(0.52356) - z * 0.4;
-	p->z = z;
-	if (p->x > vars->max)
-		vars->max = p->x;
-	if (p->y > vars->max)
-		vars->max = p->y;
-	if (p->x < vars->min)
-		vars->min = p->x;
-	if (p->y < vars->min)
-		vars->min = p->y;
-	//printf("o %f max %f\n", vars->origin, vars->max);
-	//printf("%d %d %d\n", x, y, z);
-	//printf("%f %f %f\n", nx, ny, nz);
-	//printf("%f %f %f\n", p->x, p->y, p->z);
+	p->x = (double) x;
+	p->y = (double) y;
+	p->z = (double) z;
+	if (p->z > vars->max_z)
+		vars->max_z = p->z;
+	if (p->z < vars->min_z)
+		vars->min_z = p->z;
 	return (p);
-}
-
-// Iterates over 3D vertices, applies projection to each point and
-// draws lines between adjacent points.
-void	draw(t_vars *vars, t_point **arr)
-{
-	int		i;
-	int		j;
-	t_line	*l;
-
-	i = 0;
-	while (i < vars->n_rows)
-	{
-		j = 0;
-		while (j < vars->n_cols)
-		{
-			if (j > 0)
-			{
-				l = line(arr[i * vars->n_cols + j - 1], arr[i * vars->n_cols + j], vars);
-				draw_line(vars->mlx, vars->win, l);
-			}
-			if (i > 0)
-			{
-				l = line(arr[(i - 1) * vars->n_cols + j], arr[i * vars->n_cols + j], vars);
-				draw_line(vars->mlx, vars->win, l);
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
-void	normalise_arr(t_point **arr, t_vars *vars)
-{
-	int	i;
-
-	vars->origin = (vars->max - vars->min) / 2.0;
-	printf("min %f max %f origin %f \n", vars->min, vars->max, vars->origin);
-	i = 0;
-	while (i < vars->n_rows * vars->n_cols)
-	{
-		arr[i]->x = normalise(-vars->min + arr[i]->x, vars);
-		arr[i]->y = normalise(-vars->min + arr[i]->y, vars);
-		printf("%f %f\n", arr[i]->x, arr[i]->y);
-		i++;
-	}
 }
 
 int	main(int argc, char **argv)
 {
 	t_vars	*vars;
-	t_point	**arr;
 
 	if (argc != 2)
 	{
@@ -112,11 +73,15 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	vars = (t_vars *) malloc(sizeof (t_vars));
-	arr = arr_from_file(argv[1], vars);
+	vars->arr = arr_from_file(argv[1], vars);
 	vars->mlx = mlx_init();
 	vars->win = mlx_new_window(vars->mlx, WIDTH, HEIGHT, "fdf");
-	normalise_arr(arr, vars);
-	draw(vars, arr);
+	vars->iso = 1;
+	vars->zoom = 10.0;
+	vars->pan_x = (double) WIDTH / 2.0;
+	vars->pan_y = (double) HEIGHT / 2.0;
+	project(vars->arr, vars);
+	draw(vars, vars->arr);
 	mlx_key_hook(vars->win, key_event, vars);
 	mlx_loop(vars->mlx);
 	return (0);
