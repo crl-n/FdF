@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:21:23 by cnysten           #+#    #+#             */
-/*   Updated: 2022/03/14 21:36:24 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/14 22:21:49 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,6 @@ void	die(char *message)
 {
 	ft_putstr(message);
 	exit(0);
-}
-
-void	project(t_point **arr, t_vars *vars)
-{
-	int		i;
-	t_point	*p;
-
-	i = 0;
-	while (i < vars->n_rows * vars->n_cols)
-	{
-		p = arr[i++];
-		if (vars->iso)
-		{
-			p->px = (p->x - p->y) * cos(0.52356);
-			p->py = (p->x + p->y) * sin(0.52356) - p->z * 0.4;
-			p->pz = p->z;
-		}
-		p->px *= vars->zoom;
-		p->py *= vars->zoom;
-		p->px += vars->pan_x;
-		p->py += vars->pan_y;
-		printf("x %f y %f\n", p->x, p->y);
-	}
 }
 
 t_point	*point(int x, int y, int z, t_vars *vars)
@@ -77,6 +54,9 @@ int	main(int argc, char **argv)
 	vars->mlx = mlx_init();
 	vars->win = mlx_new_window(vars->mlx, WIDTH, HEIGHT, "fdf");
 	vars->iso = 1;
+	vars->persp = 1;
+	vars->fov = 1.0 / tan(1.0 / 2.0);
+	vars->ar = WIDTH / HEIGHT;
 	vars->zoom = 10.0;
 	vars->pan_x = (double) WIDTH / 2.0;
 	vars->pan_y = (double) HEIGHT / 2.0;

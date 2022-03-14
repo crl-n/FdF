@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/14 21:42:24 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/14 22:20:37 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include <string.h>
 # define USAGE "Usage : ./fdf <filename>\n"
-# define WIDTH 600
-# define HEIGHT 400
+# define WIDTH 1080
+# define HEIGHT 720
 
 typedef struct s_point
 {
@@ -35,10 +35,13 @@ typedef struct s_vars
 	void	*mlx;
 	t_point	**arr;
 	int		iso : 1;
+	int		persp : 1;
 	int		n_rows;
 	int		n_cols;
 	double	max_z;
 	double	min_z;
+	double	fov;
+	double	ar;
 	double	zoom;
 	double	pan_x;
 	double	pan_y;

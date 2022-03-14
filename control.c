@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:03:37 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/14 21:53:34 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/14 22:19:47 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ int	key_event(int keycode, t_vars *vars)
 		vars->pan_x -= 10;
 	else if (keycode == 0x2)
 		vars->pan_x += 10;
+	else if (keycode == 0xf && vars->persp)
+		vars->persp = 0;
+	else if (keycode == 0xf && !vars->persp)
+		vars->persp = 1;
 	refresh(vars);
 	return (0);
 }
