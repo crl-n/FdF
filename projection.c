@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 22:21:56 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/14 22:33:27 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/14 22:39:58 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	perspective(t_point *p, t_vars *vars)
 	double	zn;
 	double	zf;
 
-	zn = 1.0;
+	zn = 20.0;
 	zf = 100.0;
 	p->px *= vars->ar * vars->fov;
 	p->px *= vars->fov;
