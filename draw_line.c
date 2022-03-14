@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 21:14:59 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/13 23:29:09 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/14 11:46:23 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,5 @@ t_line	*line(t_point *a, t_point * b, t_vars *vars)
 	if (line->y0 > line->y1)
 		line->sy = -1;
 	line->m = (double) line->dy / line->dx; //TODO: division by zero
-	free(a);
-	free(b);
 	return (line);
 }

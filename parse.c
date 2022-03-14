@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:46:41 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/13 22:39:03 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/14 10:45:56 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@
 #include "fdf.h"
 #include "libft.h"
 #include "get_next_line.h"
-
-static void	del(void *content, size_t content_size)
-{
-	(void) content_size;
-	free(content);
-}
 
 static t_list	*read_lines(int fd)
 {
@@ -47,6 +41,7 @@ static t_list	*read_lines(int fd)
 }
 
 // Allocates and initialises
+/*
 static int	**int_array_2d(int n_rows, int n_cols)
 {
 	int		**arr;
@@ -68,14 +63,27 @@ static int	**int_array_2d(int n_rows, int n_cols)
 	}
 	return (arr);
 }
+*/
+
+static t_point	**point_array(int n_rows, int n_cols)
+{
+	t_point	**arr;
+	size_t	size;
+
+	size = n_rows * n_cols * sizeof (t_point **);
+	arr = (t_point **) malloc(size);
+	if (!arr)
+		die("Malloc fail.");
+	ft_bzero(arr, size);
+	return (arr);
+}
 
 // Sets the dimension variables in the vars struct
 static void	set_vars(int n_rows, int n_cols, t_vars *vars)
 {
-	int	n;
-
 	vars->n_rows = n_rows;
 	vars->n_cols = n_cols;
+	/*
 	if (n_rows > n_cols)
 		n = n_rows;
 	else
@@ -85,6 +93,8 @@ static void	set_vars(int n_rows, int n_cols, t_vars *vars)
 	else
 		vars->scale = HEIGHT / n;
 	vars->max = n;
+	vars->origin = n / 2;
+	*/
 }
 
 static int	get_n_cols(char **split)
@@ -97,33 +107,31 @@ static int	get_n_cols(char **split)
 	return (n_cols);
 }
 
-static int	**parse_lines(t_list *lines, t_vars *vars, int **arr, char **split)
+static t_point	**parse_lines(t_list *lines, t_vars *vars,
+				t_point **arr, char **split)
 {
 	int		i;
 	int		j;
-	int		k;
 
-	j = 0;
+	i = 0;
 	while (lines)
 	{
-		i = 0;
-		k = 0;
+		j = 0;
 		split = ft_strsplit(lines->content, ' ');
-		if (j == 0)
+		if (i == 0)
 		{
 			set_vars(ft_lstsize(lines), get_n_cols(split), vars);
 			printf("number of columns %d\n", vars->n_cols); //DEBUG
 			printf("number of rows %d\n", vars->n_rows); //DEBUG
-			arr = int_array_2d(vars->n_rows, vars->n_cols);
+			arr = point_array(vars->n_rows, vars->n_cols);
 		}
-		while (split[i])
+		while (split[j])
 		{
-			arr[j][k++] = ft_atoi(split[i++]);
-			if (abs(arr[j][k - 1]) > vars->max)
-				vars->max = abs(arr[j][k - 1]);
+			arr[i * vars->n_cols + j] = point(i, j, ft_atoi(split[j]), vars);
+			j++;
 		}
 		free(split);
-		j++;
+		i++;
 		lines = lines->next;
 	}
 	return (arr);
@@ -139,11 +147,11 @@ void	print_lines(t_list *lines)
 	}
 }
 
-int	**arr_from_file(char *filename, t_vars *vars)
+t_point	**arr_from_file(char *filename, t_vars *vars)
 {
 	int		fd;
 	t_list	*lines;
-	int		**arr;
+	t_point	**arr;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
@@ -152,7 +160,6 @@ int	**arr_from_file(char *filename, t_vars *vars)
 	print_lines(lines);
 	arr = parse_lines(lines, vars, NULL, NULL);
 	ft_lstdel(&lines, del);
-	vars->origin = vars->max / 2;
 	close(fd);
 	return (arr);
 }

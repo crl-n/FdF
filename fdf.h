@@ -6,13 +6,14 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/13 21:34:16 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/14 11:34:58 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
+# include <string.h>
 # define USAGE "Usage : ./fdf <filename>\n"
 # define WIDTH 600
 # define HEIGHT 400
@@ -23,8 +24,9 @@ typedef struct s_vars
 	void	*mlx;
 	int		n_rows;
 	int		n_cols;
-	int		origin;
-	int		max;
+	double	origin;
+	double	max;
+	double	min;
 	int		scale;
 	int		a_ratio;
 	int		fov;
@@ -58,8 +60,9 @@ typedef struct s_line
 	double	m;
 }	t_line;
 
-int		**arr_from_file(char *filename, t_vars *vars);
+t_point	**arr_from_file(char *filename, t_vars *vars);
 void	draw_line(void *mlx, void *win, t_line *line);
+void	del(void *content, size_t content_size);
 void	die(char *message);
 int		key_event(int keycode, t_vars *vars);
 t_line	*line(t_point *a, t_point *b, t_vars *vars);
