@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/22 23:12:22 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/22 23:45:03 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_line
 }	t_line;
 
 t_point	**arr_from_file(char *filename, t_vars *vars);
+void	clear_img(t_img *img);
 void	del(void *content, size_t content_size);
 void	die(char *message);
 void	draw(t_vars *vars, t_point **arr);
@@ -82,6 +83,6 @@ t_line	*line(t_point *a, t_point *b);
 t_point	*point(int x, int y, int z, t_vars *vars);
 t_point	**point_array(int n_rows, int n_cols);
 void	project(t_point **arr, t_vars *vars);
-void	put_pxl(int x, int y, int color);
+void	put_pxl(t_img *img, int x, int y, int color);
 
 #endif

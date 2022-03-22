@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 21:27:36 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/22 18:47:13 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/22 23:45:39 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	draw(t_vars *vars, t_point **arr)
 	int		i;
 	int		j;
 
+	clear_img(vars->img);
 	i = 0;
 	while (i < vars->n_rows)
 	{
@@ -36,4 +37,5 @@ void	draw(t_vars *vars, t_point **arr)
 		}
 		i++;
 	}
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img->img, 0, 0);
 }
