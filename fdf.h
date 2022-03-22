@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/22 23:45:03 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/23 00:17:06 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	del(void *content, size_t content_size);
 void	die(char *message);
 void	draw(t_vars *vars, t_point **arr);
 void	draw_line(t_line *line, t_vars *vars);
+void	draw_menu(t_vars *vars);
 t_img	*image(void *img);
 t_vars	*init_vars(void);
 int		key_event(int keycode, t_vars *vars);

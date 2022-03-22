@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:21:23 by cnysten           #+#    #+#             */
-/*   Updated: 2022/03/22 23:36:57 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/23 00:16:48 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	main(int argc, char **argv)
 	vars->img = image(vars->mlx);
 	project(vars->arr, vars);
 	draw(vars, vars->arr);
+	draw_menu(vars);
 	mlx_key_hook(vars->win, key_event, vars);
 	mlx_loop(vars->mlx);
 	return (0);
