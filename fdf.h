@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/22 18:39:48 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/22 23:12:22 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,20 @@ typedef struct s_point
 	int		color;
 }	t_point;
 
+typedef struct s_img
+{
+	void	*img;
+	char	*data;
+	int		bpp;
+	int		lb;
+	int		end;
+}	t_img;
+
 typedef struct s_vars
 {
 	void	*win;
 	void	*mlx;
+	t_img	*img;
 	t_point	**arr;
 	int		iso : 1;
 	int		persp : 1;
@@ -46,13 +56,6 @@ typedef struct s_vars
 	double	pan_x;
 	double	pan_y;
 }	t_vars;
-
-typedef struct s_win
-{
-	void	*window;
-	int		width;
-	int		height;
-}	t_win;
 
 typedef struct s_line
 {
@@ -68,14 +71,17 @@ typedef struct s_line
 }	t_line;
 
 t_point	**arr_from_file(char *filename, t_vars *vars);
-void	draw(t_vars *vars, t_point **arr);
-void	draw_line(t_line *line, t_vars *vars);
 void	del(void *content, size_t content_size);
 void	die(char *message);
+void	draw(t_vars *vars, t_point **arr);
+void	draw_line(t_line *line, t_vars *vars);
+t_img	*image(void *img);
+t_vars	*init_vars(void);
 int		key_event(int keycode, t_vars *vars);
 t_line	*line(t_point *a, t_point *b);
 t_point	*point(int x, int y, int z, t_vars *vars);
 t_point	**point_array(int n_rows, int n_cols);
 void	project(t_point **arr, t_vars *vars);
+void	put_pxl(int x, int y, int color);
 
 #endif

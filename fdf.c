@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:21:23 by cnysten           #+#    #+#             */
-/*   Updated: 2022/03/22 18:24:57 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/22 22:59:55 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,6 @@ void	die(char *message)
 	exit(0);
 }
 
-t_point	*point(int x, int y, int z, t_vars *vars)
-{
-	t_point	*p;
-
-	p = (t_point *) malloc(sizeof (t_point));
-	if (!p)
-		die("Couldn't allocate memory for point.");
-	p->x = (double) x;
-	p->y = (double) y;
-	p->z = (double) z;
-	if (p->z > vars->max_z)
-		vars->max_z = p->z;
-	if (p->z < vars->min_z)
-		vars->min_z = p->z;
-	return (p);
-}
-
 int	main(int argc, char **argv)
 {
 	t_vars	*vars;
@@ -48,17 +31,13 @@ int	main(int argc, char **argv)
 		ft_putstr(USAGE);
 		return (0);
 	}
-	vars = (t_vars *) malloc(sizeof (t_vars));
-	vars->arr = arr_from_file(argv[1], vars);
+	vars = init_vars();
+	if (!vars)
+		return (0);
 	vars->mlx = mlx_init();
 	vars->win = mlx_new_window(vars->mlx, WIDTH, HEIGHT, "fdf");
-	vars->iso = 1;
-	vars->persp = 1;
-	vars->fov = 1.0 / tan(1.0 / 2.0);
-	vars->ar = WIDTH / HEIGHT;
-	vars->zoom = 10.0;
-	vars->pan_x = (double) WIDTH / 2.0;
-	vars->pan_y = (double) HEIGHT / 2.0;
+	vars->arr = arr_from_file(argv[1], vars);
+	vars->img = image(vars->mlx);
 	project(vars->arr, vars);
 	draw(vars, vars->arr);
 	mlx_key_hook(vars->win, key_event, vars);
