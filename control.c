@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:03:37 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/14 22:19:47 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/22 18:25:19 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	refresh(t_vars *vars)
 
 int	key_event(int keycode, t_vars *vars)
 {
-	printf("%#x\n", keycode);
 	if (keycode == 0x35)
 	{
 		mlx_destroy_window(vars->mlx, vars->win);
@@ -49,4 +48,3 @@ int	key_event(int keycode, t_vars *vars)
 	refresh(vars);
 	return (0);
 }
-

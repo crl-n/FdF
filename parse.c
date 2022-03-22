@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:46:41 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/14 10:45:56 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/22 18:46:45 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,61 +40,11 @@ static t_list	*read_lines(int fd)
 	return (lines);
 }
 
-// Allocates and initialises
-/*
-static int	**int_array_2d(int n_rows, int n_cols)
-{
-	int		**arr;
-	int		*cells;
-	int		i;
-	size_t	size;
-
-	size = n_rows * sizeof (int *) + n_cols * sizeof (int);
-	arr = (int **) malloc(size);
-	if (!arr)
-		die("Malloc fail.");
-	ft_bzero(arr, size);
-	cells = (int *)(arr + n_rows);
-	i = 0;
-	while (i < n_rows)
-	{
-		arr[i] = cells + i * n_cols;
-		i++;
-	}
-	return (arr);
-}
-*/
-
-static t_point	**point_array(int n_rows, int n_cols)
-{
-	t_point	**arr;
-	size_t	size;
-
-	size = n_rows * n_cols * sizeof (t_point **);
-	arr = (t_point **) malloc(size);
-	if (!arr)
-		die("Malloc fail.");
-	ft_bzero(arr, size);
-	return (arr);
-}
-
 // Sets the dimension variables in the vars struct
 static void	set_vars(int n_rows, int n_cols, t_vars *vars)
 {
 	vars->n_rows = n_rows;
 	vars->n_cols = n_cols;
-	/*
-	if (n_rows > n_cols)
-		n = n_rows;
-	else
-		n = n_cols;
-	if (WIDTH > HEIGHT)
-		vars->scale = WIDTH / n;
-	else
-		vars->scale = HEIGHT / n;
-	vars->max = n;
-	vars->origin = n / 2;
-	*/
 }
 
 static int	get_n_cols(char **split)
@@ -121,8 +71,6 @@ static t_point	**parse_lines(t_list *lines, t_vars *vars,
 		if (i == 0)
 		{
 			set_vars(ft_lstsize(lines), get_n_cols(split), vars);
-			printf("number of columns %d\n", vars->n_cols); //DEBUG
-			printf("number of rows %d\n", vars->n_rows); //DEBUG
 			arr = point_array(vars->n_rows, vars->n_cols);
 		}
 		while (split[j])
@@ -137,16 +85,6 @@ static t_point	**parse_lines(t_list *lines, t_vars *vars,
 	return (arr);
 }
 
-//Debug, REMOVE
-void	print_lines(t_list *lines)
-{
-	while (lines)
-	{
-		printf("%s\n", (char *)lines->content);
-		lines = lines->next;
-	}
-}
-
 t_point	**arr_from_file(char *filename, t_vars *vars)
 {
 	int		fd;
@@ -157,7 +95,6 @@ t_point	**arr_from_file(char *filename, t_vars *vars)
 	if (fd < 0)
 		die(USAGE);
 	lines = read_lines(fd);
-	print_lines(lines);
 	arr = parse_lines(lines, vars, NULL, NULL);
 	ft_lstdel(&lines, del);
 	close(fd);

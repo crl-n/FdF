@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 22:21:56 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/14 22:39:58 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/22 18:55:01 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,3 @@ void	project(t_point **arr, t_vars *vars)
 		p->py += vars->pan_y;
 	}
 }
-

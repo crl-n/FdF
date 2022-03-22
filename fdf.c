@@ -6,13 +6,12 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:21:23 by cnysten           #+#    #+#             */
-/*   Updated: 2022/03/14 22:21:49 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/22 18:24:57 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mlx.h>
 #include <stdlib.h>
-#include <stdio.h> //remove
 #include <math.h>
 #include "fdf.h"
 #include "libft.h"

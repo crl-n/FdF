@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/14 22:20:37 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/22 18:39:48 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_point
 	double	px;
 	double	py;
 	double	pz;
-	int	color;
+	int		color;
 }	t_point;
 
 typedef struct s_vars
@@ -45,14 +45,14 @@ typedef struct s_vars
 	double	zoom;
 	double	pan_x;
 	double	pan_y;
-} t_vars;
+}	t_vars;
 
 typedef struct s_win
 {
 	void	*window;
 	int		width;
 	int		height;
-} t_win;
+}	t_win;
 
 typedef struct s_line
 {
@@ -73,8 +73,9 @@ void	draw_line(t_line *line, t_vars *vars);
 void	del(void *content, size_t content_size);
 void	die(char *message);
 int		key_event(int keycode, t_vars *vars);
-t_line	*line(t_point *a, t_point *b, t_vars *vars);
+t_line	*line(t_point *a, t_point *b);
 t_point	*point(int x, int y, int z, t_vars *vars);
+t_point	**point_array(int n_rows, int n_cols);
 void	project(t_point **arr, t_vars *vars);
 
 #endif

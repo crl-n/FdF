@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   projection.c                                       :+:      :+:    :+:   */
+/*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 21:27:36 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/14 21:28:16 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/22 18:47:13 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	draw(t_vars *vars, t_point **arr)
 {
 	int		i;
 	int		j;
-	t_line	*l;
 
 	i = 0;
 	while (i < vars->n_rows)
@@ -28,18 +27,13 @@ void	draw(t_vars *vars, t_point **arr)
 		while (j < vars->n_cols)
 		{
 			if (j > 0)
-			{
-				l = line(arr[i * vars->n_cols + j - 1], arr[i * vars->n_cols + j], vars);
-				draw_line(l, vars);
-			}
+				draw_line(line(arr[i * vars->n_cols + j - 1],
+						arr[i * vars->n_cols + j]), vars);
 			if (i > 0)
-			{
-				l = line(arr[(i - 1) * vars->n_cols + j], arr[i * vars->n_cols + j], vars);
-				draw_line(l, vars);
-			}
+				draw_line(line(arr[(i - 1) * vars->n_cols + j],
+						arr[i * vars->n_cols + j]), vars);
 			j++;
 		}
 		i++;
 	}
 }
-
