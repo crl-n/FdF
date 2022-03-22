@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 21:14:59 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/22 18:50:49 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/22 19:15:46 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <math.h>
 #include <stdlib.h>
 #include "fdf.h"
-#include <stdio.h>
 
 static void	gentle_slope(t_vars *vars, t_line *line)
 {
@@ -23,7 +22,6 @@ static void	gentle_slope(t_vars *vars, t_line *line)
 	int		x;
 	int		y;
 
-	printf("gentle");
 	threshold = 0.5;
 	offset = 0.0;
 	x = line->x0;
@@ -49,7 +47,6 @@ static void	steep_slope(t_vars *vars, t_line *line)
 	int		x;
 	int		y;
 
-	printf("steep");
 	threshold = 0.5;
 	offset = 0.0;
 	x = line->x0;
@@ -73,7 +70,6 @@ static void	vertical_line(t_vars *vars, t_line *line)
 	int		x;
 	int		y;
 
-	printf("vertical");
 	x = line->x0;
 	y = line->y0;
 	while (y != line->y1)
