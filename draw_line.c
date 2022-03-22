@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 21:14:59 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/22 23:34:14 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/22 23:52:18 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	gentle_slope(t_vars *vars, t_line *line)
 	y = line->y0;
 	while (x != line->x1)
 	{
-		//mlx_pixel_put(vars->mlx, vars->win, x, y, 0xFFFFFF);
 		put_pxl(vars->img, x, y, 0xFFFFFF);
 		x += line->sx;
 		offset += fabs(line->m);
@@ -38,7 +37,6 @@ static void	gentle_slope(t_vars *vars, t_line *line)
 			threshold += 1.0;
 		}
 	}
-	//mlx_pixel_put(vars->mlx, vars->win, line->x1, line->y1, 0xFFFFFF);
 	put_pxl(vars->img, line->x1, line->y1, 0xFFFFFF);
 }
 
@@ -55,7 +53,6 @@ static void	steep_slope(t_vars *vars, t_line *line)
 	y = line->y0;
 	while (y != line->y1)
 	{
-		//mlx_pixel_put(vars->mlx, vars->win, x, y, 0xFFFFFF);
 		put_pxl(vars->img, x, y, 0xFFFFFF);
 		y += line->sy;
 		offset += fabs(1 / line->m);
@@ -65,7 +62,6 @@ static void	steep_slope(t_vars *vars, t_line *line)
 			threshold += 1.0;
 		}
 	}
-	//mlx_pixel_put(vars->mlx, vars->win, line->x1, line->y1, 0xFFFFFF);
 	put_pxl(vars->img, line->x1, line->y1, 0xFFFFFF);
 }
 
@@ -78,7 +74,6 @@ static void	vertical_line(t_vars *vars, t_line *line)
 	y = line->y0;
 	while (y != line->y1)
 	{
-		//mlx_pixel_put(vars->mlx, vars->win, x, y, 0xFFFFFF);
 		put_pxl(vars->img, x, y, 0xFFFFFF);
 		y += line->sy;
 	}

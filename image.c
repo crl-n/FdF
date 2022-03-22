@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:41:16 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/22 23:44:43 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/22 23:50:33 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	put_pxl(t_img *img, int x, int y, int color)
 {
 	int	pxl;
 
+	if (x > WIDTH - 1 || y > HEIGHT - 1)
+		return ;
 	pxl = (y * img->lb) + (x * 4);
 	if (img->end == 1)
 	{
