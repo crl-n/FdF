@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:46:41 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/22 18:46:45 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/23 17:32:40 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static t_point	**parse_lines(t_list *lines, t_vars *vars,
 		}
 		while (split[j])
 		{
-			arr[i * vars->n_cols + j] = point(i, j, ft_atoi(split[j]), vars);
+			arr[i * vars->n_cols + j] = point(j, i, ft_atoi(split[j]), vars);
 			j++;
 		}
 		free(split);

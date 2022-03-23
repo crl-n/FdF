@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/23 00:17:06 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/23 17:28:37 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@
 # define USAGE "Usage : ./fdf <filename>\n"
 # define WIDTH 1080
 # define HEIGHT 720
+# define ROT_THETA 0.1
+# define KEY_T 0x11
+# define KEY_Y 0x10
+# define KEY_U 0x20
+# define KEY_I 0x22
+# define KEY_O 0x1f
+# define KEY_P 0x23
+# define KEY_G 0x5
+# define KEY_H 0x4
 
 typedef struct s_point
 {
@@ -79,11 +88,13 @@ void	draw_line(t_line *line, t_vars *vars);
 void	draw_menu(t_vars *vars);
 t_img	*image(void *img);
 t_vars	*init_vars(void);
+int		is_rot_key(int keycode);
 int		key_event(int keycode, t_vars *vars);
 t_line	*line(t_point *a, t_point *b);
 t_point	*point(int x, int y, int z, t_vars *vars);
 t_point	**point_array(int n_rows, int n_cols);
 void	project(t_point **arr, t_vars *vars);
 void	put_pxl(t_img *img, int x, int y, int color);
+void	rotate(t_point **arr, int keycode);
 
 #endif

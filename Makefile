@@ -24,8 +24,9 @@ INCL += -I./libft
 
 FW = -framework OpenGL -framework AppKit
 
-SRC = allocators.c control.c draw.c draw_line.c fdf.c \
-	  image.c menu.c parse.c parse_util.c projection.c
+SRC = allocators.c control.c control_utils.c draw.c draw_line.c fdf.c \
+	  image.c menu.c parse.c parse_util.c projection.c \
+	  rotate.c
 
 OBJ = $(SRC:%.c=%.o)
 

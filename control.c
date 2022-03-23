@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:03:37 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/23 00:35:49 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/23 17:27:55 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <mlx.h>
 #include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
 
 static void	refresh(t_vars *vars)
 {
@@ -23,15 +24,11 @@ static void	refresh(t_vars *vars)
 	draw_menu(vars);
 }
 
-static void	increase_fov(t_vars *vars)
+static void	adjust_fov(t_vars *vars, int keycode)
 {
-	if (vars->fov < 5.0)
+	if (vars->fov < 5.0 && keycode == 0x20)
 		vars->fov += 0.1 / tan(1.0 / 2.0);
-}
-
-static void	decrease_fov(t_vars *vars)
-{
-	if (vars->fov > 0.0)
+	if (vars->fov > 0.0 && keycode == 0x22)
 		vars->fov -= 0.1 / tan(1.0 / 2.0);
 }
 
@@ -43,6 +40,7 @@ static void	esc(t_vars *vars)
 
 int	key_event(int keycode, t_vars *vars)
 {
+	printf("keyc %#x\n", keycode);
 	if (keycode == 0x35)
 		esc(vars);
 	if (keycode == 0x26)
@@ -61,10 +59,10 @@ int	key_event(int keycode, t_vars *vars)
 		vars->persp = 0;
 	else if (keycode == 0xf && !vars->persp)
 		vars->persp = 1;
-	else if (keycode == 0x20)
-		increase_fov(vars);
-	else if (keycode == 0x22)
-		decrease_fov(vars);
+	else if (keycode == KEY_G || keycode == KEY_H)
+		adjust_fov(vars, keycode);
+	else if (is_rot_key(keycode))
+		rotate(vars->arr, keycode);
 	refresh(vars);
 	return (0);
 }

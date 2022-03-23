@@ -1,34 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_util.c                                       :+:      :+:    :+:   */
+/*   control_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/14 09:28:44 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/23 17:40:31 by carlnysten       ###   ########.fr       */
+/*   Created: 2022/03/23 17:13:48 by carlnysten        #+#    #+#             */
+/*   Updated: 2022/03/23 17:25:42 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "fdf.h"
-#include "libft.h"
 
-void	del(void *content, size_t content_size)
+int	is_rot_key(int keycode)
 {
-	(void) content_size;
-	free(content);
-}
-
-t_point	**point_array(int n_rows, int n_cols)
-{
-	t_point	**arr;
-	size_t	size;
-
-	size = (n_rows * n_cols + 1) * sizeof (t_point **);
-	arr = (t_point **) malloc(size);
-	if (!arr)
-		die("Malloc fail.");
-	ft_bzero(arr, size);
-	return (arr);
+	if (keycode == KEY_T || keycode == KEY_Y)
+		return (1);
+	if (keycode == KEY_U || keycode == KEY_I)
+		return (1);
+	if (keycode == KEY_O || keycode == KEY_P)
+		return (1);
+	return (0);
 }
