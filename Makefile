@@ -4,7 +4,7 @@
 NAME = fdf
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 ifneq ("$(wildcard /usr/local/lib/libmlx.a)", "")
 LIB = -L/usr/local/lib -lmlx
@@ -24,8 +24,8 @@ INCL += -I./libft
 
 FW = -framework OpenGL -framework AppKit
 
-SRC = allocators.c control.c control_utils.c draw.c draw_line.c fdf.c \
-	  image.c menu.c parse.c parse_util.c projection.c \
+SRC = allocators.c color.c control.c control_utils.c draw.c draw_line.c \
+	  fdf.c image.c menu.c parse.c parse_util.c projection.c \
 	  rotate.c
 
 OBJ = $(SRC:%.c=%.o)

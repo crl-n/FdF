@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/23 17:28:37 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/24 15:49:46 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # define WIDTH 1080
 # define HEIGHT 720
 # define ROT_THETA 0.1
+# define START_COLOR 0xFFFFFF;
+# define END_COLOR 0xFF0000;
 # define KEY_T 0x11
 # define KEY_Y 0x10
 # define KEY_U 0x20
@@ -59,6 +61,7 @@ typedef struct s_vars
 	int		n_cols;
 	double	max_z;
 	double	min_z;
+	double	step_z;
 	double	fov;
 	double	ar;
 	double	zoom;
@@ -72,10 +75,14 @@ typedef struct s_line
 	int		y0;
 	int		x1;
 	int		y1;
+	double	z0;
+	double	z1;
 	double	dx;
 	double	dy;
+	double	dz;
 	int		sx;
 	int		sy;
+	double	sz;
 	double	m;
 }	t_line;
 
@@ -86,6 +93,7 @@ void	die(char *message);
 void	draw(t_vars *vars, t_point **arr);
 void	draw_line(t_line *line, t_vars *vars);
 void	draw_menu(t_vars *vars);
+int		get_color(double z, t_vars *vars);
 t_img	*image(void *img);
 t_vars	*init_vars(void);
 int		is_rot_key(int keycode);
@@ -96,5 +104,6 @@ t_point	**point_array(int n_rows, int n_cols);
 void	project(t_point **arr, t_vars *vars);
 void	put_pxl(t_img *img, int x, int y, int color);
 void	rotate(t_point **arr, int keycode);
+void	set_color_step(t_vars *vars);
 
 #endif

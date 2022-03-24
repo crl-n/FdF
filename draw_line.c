@@ -6,13 +6,14 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 21:14:59 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/22 23:52:18 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/24 15:57:18 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mlx.h>
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "fdf.h"
 
 static void	gentle_slope(t_vars *vars, t_line *line)
@@ -21,15 +22,19 @@ static void	gentle_slope(t_vars *vars, t_line *line)
 	double	offset;
 	int		x;
 	int		y;
+	double	z;
 
 	threshold = 0.5;
 	offset = 0.0;
 	x = line->x0;
 	y = line->y0;
+	z = line->z0;
 	while (x != line->x1)
 	{
-		put_pxl(vars->img, x, y, 0xFFFFFF);
+		put_pxl(vars->img, x, y, get_color(z, vars));
 		x += line->sx;
+		if (line->dz != 0.0 && line->dx != 0.0)
+			z += line->sz * (line->dz / line->dx);
 		offset += fabs(line->m);
 		if (offset > threshold)
 		{
@@ -37,7 +42,7 @@ static void	gentle_slope(t_vars *vars, t_line *line)
 			threshold += 1.0;
 		}
 	}
-	put_pxl(vars->img, line->x1, line->y1, 0xFFFFFF);
+	put_pxl(vars->img, line->x1, line->y1, get_color(z, vars));
 }
 
 static void	steep_slope(t_vars *vars, t_line *line)
@@ -46,15 +51,19 @@ static void	steep_slope(t_vars *vars, t_line *line)
 	double	offset;
 	int		x;
 	int		y;
+	double	z;
 
 	threshold = 0.5;
 	offset = 0.0;
 	x = line->x0;
 	y = line->y0;
+	z = line->z0;
 	while (y != line->y1)
 	{
-		put_pxl(vars->img, x, y, 0xFFFFFF);
+		put_pxl(vars->img, x, y, get_color(z, vars));
 		y += line->sy;
+		if (line->dz != 0.0 && line->dy != 0.0)
+			z += line->sz * (line->dz / line->dy);
 		offset += fabs(1 / line->m);
 		if (offset > threshold)
 		{
@@ -62,19 +71,22 @@ static void	steep_slope(t_vars *vars, t_line *line)
 			threshold += 1.0;
 		}
 	}
-	put_pxl(vars->img, line->x1, line->y1, 0xFFFFFF);
+	put_pxl(vars->img, line->x1, line->y1, get_color(z, vars));
 }
 
 static void	vertical_line(t_vars *vars, t_line *line)
 {
 	int		x;
 	int		y;
+	double	z;
 
 	x = line->x0;
 	y = line->y0;
+	z = line->z0;
 	while (y != line->y1)
 	{
-		put_pxl(vars->img, x, y, 0xFFFFFF);
+		put_pxl(vars->img, x, y, get_color(z, vars));
+		z += line->sz * (line->dz / line->dy);
 		y += line->sy;
 	}
 }

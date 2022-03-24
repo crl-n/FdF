@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:46:41 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/23 17:32:40 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/24 15:41:35 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,43 +41,58 @@ static t_list	*read_lines(int fd)
 }
 
 // Sets the dimension variables in the vars struct
-static void	set_vars(int n_rows, int n_cols, t_vars *vars)
-{
-	vars->n_rows = n_rows;
-	vars->n_cols = n_cols;
-}
-
-static int	get_n_cols(char **split)
+static void	set_vars(int n_rows, char **split, t_vars *vars)
 {
 	int	n_cols;
 
 	n_cols = 0;
 	while (split[n_cols])
 		n_cols++;
-	return (n_cols);
+	vars->n_rows = n_rows;
+	vars->n_cols = n_cols;
+}
+
+static void	get_z_values(t_point **arr, t_vars *vars, char **split, int i)
+{
+	int		j;
+	double	x;
+	double	y;
+	double	z;
+
+	j = 0;
+	while (split[j])
+	{
+		x = j - vars->n_cols / 2;
+		y = i - vars->n_rows / 2;
+		z = ft_atoi(split[j]);
+		if (z < vars->min_z)
+			vars->min_z = z;
+		if (z > vars->max_z)
+			vars->max_z = z;
+		arr[i * vars->n_cols + j] = point(x, y, z, vars);
+		j++;
+	}
+	if (j != vars->n_cols)
+		die("Invalid amoount of columns");
 }
 
 static t_point	**parse_lines(t_list *lines, t_vars *vars,
 				t_point **arr, char **split)
 {
 	int		i;
-	int		j;
 
 	i = 0;
 	while (lines)
 	{
-		j = 0;
 		split = ft_strsplit(lines->content, ' ');
+		if (!split)
+			die("Error: First line is empty.");
 		if (i == 0)
 		{
-			set_vars(ft_lstsize(lines), get_n_cols(split), vars);
+			set_vars(ft_lstsize(lines), split, vars);
 			arr = point_array(vars->n_rows, vars->n_cols);
 		}
-		while (split[j])
-		{
-			arr[i * vars->n_cols + j] = point(j, i, ft_atoi(split[j]), vars);
-			j++;
-		}
+		get_z_values(arr, vars, split, i);
 		free(split);
 		i++;
 		lines = lines->next;

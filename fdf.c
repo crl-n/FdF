@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:21:23 by cnysten           #+#    #+#             */
-/*   Updated: 2022/03/23 00:16:48 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/24 15:23:38 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main(int argc, char **argv)
 	vars->win = mlx_new_window(vars->mlx, WIDTH, HEIGHT, "fdf");
 	vars->arr = arr_from_file(argv[1], vars);
 	vars->img = image(vars->mlx);
+	set_color_step(vars);
 	project(vars->arr, vars);
 	draw(vars, vars->arr);
 	draw_menu(vars);

@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 22:21:56 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/23 13:14:20 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/24 13:29:10 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static double	norm(double v)
 	nv = (v - origin) / origin;
 	return (nv);
 }
-
+/*
 static double	denorm(double nv)
 {
 	double	v;
@@ -44,23 +44,29 @@ static double	denorm(double nv)
 	printf("v: %f\n", v);
 	return (v);
 }
+*/
 
 static void	perspective(t_point *p, t_vars *vars)
 {
 	double	zn;
 	double	zf;
 
+	(void) vars;
 	zn = norm(20.0);
-	zf = norm(1000.0);
-	p->px = norm(p->x);
-	p->py = norm(p->y);
-	p->pz = norm(p->z);
-	p->px *= vars->ar * vars->fov;
+	zf = norm(200.0);
+	//p->px = norm(p->x);
+	//p->py = norm(p->y);
+	//p->pz = norm(p->z);
+	p->px = p->x;
+	p->py = p->y;
+	p->pz = p->z;
+	//p->px *= vars->ar * vars->fov;
 	if (p->z != 0.0)
-		p->px /= fabs(norm(p->z));
-	p->py *= vars->fov;
+		p->px /= (p->z * 0.15);
+	//p->py *= vars->fov;
 	if (p->z != 0.0)
-		p->py /= fabs(norm(p->z));
+		p->py /= (p->z * 0.15);
+	/*
 	p->pz *= (zf + zn) / (zf - zn);
 	p->pz *= (2.0 * zn * zf) / (zn - zf);
 	printf("x ");
@@ -69,6 +75,7 @@ static void	perspective(t_point *p, t_vars *vars)
 	p->py = denorm(p->py);
 	printf("z ");
 	p->pz = denorm(p->pz);
+	*/
 }
 
 void	project(t_point **arr, t_vars *vars)

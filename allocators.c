@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 18:39:14 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/23 00:50:43 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/24 15:49:07 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ t_vars	*init_vars(void)
 	vars->zoom = 10.0;
 	vars->pan_x = (double) WIDTH / 2.0;
 	vars->pan_y = (double) HEIGHT / 2.0;
+	vars->max_z = -2147483648.0;
+	vars->min_z = 2147483647.0;
 	return (vars);
 }
 
@@ -73,14 +75,20 @@ t_line	*line(t_point *a, t_point *b)
 	line->y0 = a->py;
 	line->x1 = b->px;
 	line->y1 = b->py;
+	line->z0 = a->z;
+	line->z1 = b->z;
 	line->dx = fabs((double) line->x1 - (double) line->x0);
 	line->dy = fabs((double) line->y1 - (double) line->y0);
+	line->dz = fabs(line->z1 - line->z0);
 	line->sx = 1;
 	line->sy = 1;
+	line->sz = 1;
 	if (line->x0 > line->x1)
 		line->sx = -1;
 	if (line->y0 > line->y1)
 		line->sy = -1;
+	if (line->z0 > line->z1)
+		line->sz = -1;
 	if (line->dx != 0.0)
 		line->m = (double) line->dy / line->dx;
 	return (line);
