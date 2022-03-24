@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/24 15:49:46 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/24 21:56:30 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ typedef struct s_vars
 	t_img	*img;
 	t_point	**arr;
 	int		iso : 1;
-	int		persp : 1;
+	int		persp;
+	int		color;
 	int		n_rows;
 	int		n_cols;
 	double	max_z;
