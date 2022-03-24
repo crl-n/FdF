@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 18:39:14 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/24 15:49:07 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/24 22:14:16 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ t_point	*point(int x, int y, int z, t_vars *vars)
 	p->x = (double) x;
 	p->y = (double) y;
 	p->z = (double) z;
+	p->orig_z = (double) z;
 	return (p);
 }
 
@@ -75,8 +76,8 @@ t_line	*line(t_point *a, t_point *b)
 	line->y0 = a->py;
 	line->x1 = b->px;
 	line->y1 = b->py;
-	line->z0 = a->z;
-	line->z1 = b->z;
+	line->z0 = a->orig_z;
+	line->z1 = b->orig_z;
 	line->dx = fabs((double) line->x1 - (double) line->x0);
 	line->dy = fabs((double) line->y1 - (double) line->y0);
 	line->dz = fabs(line->z1 - line->z0);

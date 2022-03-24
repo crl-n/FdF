@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/24 21:56:30 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/24 22:13:37 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_point
 	double	x;
 	double	y;
 	double	z;
+	double	orig_z;
 	double	px;
 	double	py;
 	double	pz;

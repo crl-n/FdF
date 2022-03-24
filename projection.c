@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 22:21:56 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/24 13:29:10 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/24 22:18:53 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ static void	perspective(t_point *p, t_vars *vars)
 	p->px = p->x;
 	p->py = p->y;
 	p->pz = p->z;
-	//p->px *= vars->ar * vars->fov;
+	p->px *= vars->ar * vars->fov;
 	if (p->z != 0.0)
 		p->px /= (p->z * 0.15);
-	//p->py *= vars->fov;
+	p->py *= vars->fov;
 	if (p->z != 0.0)
 		p->py /= (p->z * 0.15);
 	/*
