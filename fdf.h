@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/25 14:26:37 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/25 20:31:53 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 # define FDF_H
 
 # include <string.h>
+# include "libft.h"
 # define USAGE "Usage : ./fdf <filename>\n"
 # define WIDTH 1080
 # define HEIGHT 720
 # define ROT_THETA 0.1
-# define START_COLOR 0xFFFFFF;
-# define END_COLOR 0xFF0000;
 # define KEY_T 0x11
 # define KEY_Y 0x10
 # define KEY_U 0x20
@@ -58,6 +57,7 @@ typedef struct s_vars
 	void	*mlx;
 	t_img	*img;
 	t_point	**arr;
+	t_list	*lines;
 	int		iso : 1;
 	int		persp;
 	int		color;
@@ -91,12 +91,12 @@ typedef struct s_line
 	double	m;
 }	t_line;
 
-t_point	**arr_from_file(char *filename, t_vars *vars);
+void	arr_from_file(char *filename, t_vars *vars);
 void	center_z_values(t_vars *vars);
 void	clear_img(t_img *img);
 void	del(void *content, size_t content_size);
 double	deg_to_rad(double deg);
-void	die(char *message);
+void	die(char *message, t_vars *vars);
 void	draw(t_vars *vars, t_point **arr);
 void	draw_line(t_line *line, t_vars *vars);
 void	draw_menu(t_vars *vars);
@@ -105,7 +105,7 @@ t_img	*image(void *img);
 t_vars	*init_vars(void);
 int		is_rot_key(int keycode);
 int		key_event(int keycode, t_vars *vars);
-t_line	*line(t_point *a, t_point *b);
+t_line	*line(t_point *a, t_point *b, t_line *line);
 t_point	*point(int x, int y, int z, t_vars *vars);
 t_point	**point_array(int n_rows, int n_cols);
 void	project(t_point **arr, t_vars *vars);

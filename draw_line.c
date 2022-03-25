@@ -6,14 +6,13 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 21:14:59 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/24 15:57:18 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/25 19:56:00 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mlx.h>
 #include <math.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include "fdf.h"
 
 static void	gentle_slope(t_vars *vars, t_line *line)
@@ -86,7 +85,8 @@ static void	vertical_line(t_vars *vars, t_line *line)
 	while (y != line->y1)
 	{
 		put_pxl(vars->img, x, y, get_color(z, vars));
-		z += line->sz * (line->dz / line->dy);
+		if (line->dz != 0.0 && line->dx != 0.0)
+			z += line->sz * (line->dz / line->dy);
 		y += line->sy;
 	}
 }
@@ -94,6 +94,8 @@ static void	vertical_line(t_vars *vars, t_line *line)
 // line equation: mx + b
 void	draw_line(t_line *line, t_vars *vars)
 {
+	if (!line)
+		die("Error: NULL line in draw_line().\n", vars);
 	if (line->dx == 0)
 		vertical_line(vars, line);
 	else if (line->m < 1 && line->m > -1)

@@ -6,15 +6,13 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 22:21:56 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/25 14:30:28 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/25 20:05:15 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mlx.h>
 #include "fdf.h"
 #include <math.h>
-
-#include <stdio.h>
 
 static void	iso(t_point *p, t_vars *vars)
 {
@@ -32,11 +30,15 @@ static void	perspective(t_point *p, t_vars *vars)
 	p->py = p->orig_y;
 	p->pz = p->orig_z;
 	p->px *= vars->ar * vars->fov;
-	if (p->z != 0.0)
-		p->px *= (p->pz * 0.1);
 	p->py *= vars->fov;
-	if (p->z != 0.0)
+	if (p->z > 0.0)
+		p->px *= (p->pz * 0.1);
+	if (p->z > 0.0)
 		p->py *= (p->pz * 0.1);
+	if (p->z < 0.0)
+		p->px /= (-p->pz);
+	if (p->z < 0.0)
+		p->py /= (-p->pz);
 }
 
 void	project(t_point **arr, t_vars *vars)
@@ -48,7 +50,6 @@ void	project(t_point **arr, t_vars *vars)
 	while (i < vars->n_rows * vars->n_cols)
 	{
 		p = arr[i++];
-		printf("x %f y %f z %f\n", p->x, p->y, p->z);
 		if (vars->persp)
 			perspective(p, vars);
 		else
@@ -58,5 +59,4 @@ void	project(t_point **arr, t_vars *vars)
 		p->px += vars->pan_x;
 		p->py += vars->pan_y;
 	}
-	printf("END\n");
 }

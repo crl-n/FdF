@@ -6,15 +6,13 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:03:37 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/24 23:57:33 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/25 20:36:00 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <mlx.h>
-#include <stdlib.h>
 #include <math.h>
-#include <stdio.h>
 
 static void	refresh(t_vars *vars)
 {
@@ -35,29 +33,22 @@ static void	adjust_fov(t_vars *vars, int key)
 static void	adjust_pan(t_vars *vars, int key)
 {
 	if (key == 0xd)
-		vars->pan_y -= 10;
+		vars->pan_y -= 10.0;
 	else if (key == 0x1)
-		vars->pan_y += 10;
+		vars->pan_y += 10.0;
 	else if (key == 0x0)
-		vars->pan_x -= 10;
+		vars->pan_x -= 10.0;
 	else if (key == 0x2)
-		vars->pan_x += 10;
-}
-
-static void	esc(t_vars *vars)
-{
-	mlx_destroy_window(vars->mlx, vars->win);
-	exit(0);
+		vars->pan_x += 10.0;
 }
 
 int	key_event(int key, t_vars *vars)
 {
-	printf("keyc %#x\n", key);
 	if (key == 0x35)
-		esc(vars);
-	if (key == 0x26)
+		die("", vars);
+	if (key == 0x26 && vars->zoom > -100.0)
 		vars->zoom--;
-	else if (key == 0x28)
+	else if (key == 0x28 && vars->zoom < 100.0)
 		vars->zoom++;
 	else if (key == 0xd || key == 0x1 || key == 0x0 || key == 0x2)
 		adjust_pan(vars, key);

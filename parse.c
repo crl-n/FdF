@@ -6,19 +6,18 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:46:41 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/24 15:41:35 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/25 19:46:32 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h> //REMOVE
 #include <fcntl.h>
 #include <unistd.h>
 #include "fdf.h"
 #include "libft.h"
 #include "get_next_line.h"
 
-static t_list	*read_lines(int fd)
+static t_list	*read_lines(int fd, t_vars *vars)
 {
 	t_list	*lines;
 	t_list	*node;
@@ -31,8 +30,10 @@ static t_list	*read_lines(int fd)
 		if (gnl_ret == 0)
 			break ;
 		if (gnl_ret < 0)
-			die("Get next line error.");
+			die("Error: Get next line error.\n", vars);
 		node = ft_lstnew(NULL, 0);
+		if (!node)
+			die("Error: Ft_lstnew could not create new node.\n", vars);
 		node->content = line;
 		node->content_size = ft_strlen(line) + 1;
 		ft_lstadd_back(&lines, node);
@@ -52,7 +53,7 @@ static void	set_vars(int n_rows, char **split, t_vars *vars)
 	vars->n_cols = n_cols;
 }
 
-static void	get_z_values(t_point **arr, t_vars *vars, char **split, int i)
+static void	get_z_values(t_vars *vars, char **split, int i)
 {
 	int		j;
 	double	x;
@@ -69,49 +70,50 @@ static void	get_z_values(t_point **arr, t_vars *vars, char **split, int i)
 			vars->min_z = z;
 		if (z > vars->max_z)
 			vars->max_z = z;
-		arr[i * vars->n_cols + j] = point(x, y, z, vars);
+		vars->arr[i * vars->n_cols + j] = point(x, y, z, vars);
+		if (!vars->arr[i * vars->n_cols + j])
+			die("Error: Failed to create point struct.\n", vars);
 		j++;
 	}
 	if (j != vars->n_cols)
-		die("Invalid amoount of columns");
+		die("Error: Invalid amount of columns in input.\n", vars);
 }
 
-static t_point	**parse_lines(t_list *lines, t_vars *vars,
-				t_point **arr, char **split)
+static void	parse_lines(t_list *lines, t_vars *vars)
 {
 	int		i;
+	char	**split;
 
 	i = 0;
 	while (lines)
 	{
 		split = ft_strsplit(lines->content, ' ');
 		if (!split)
-			die("Error: First line is empty.");
+			die("Error: Input contained an empty line.\n", vars);
 		if (i == 0)
 		{
 			set_vars(ft_lstsize(lines), split, vars);
-			arr = point_array(vars->n_rows, vars->n_cols);
+			vars->arr = point_array(vars->n_rows, vars->n_cols);
+			if (!vars->arr)
+				die("Error: Failed to create array of points\n", vars);
 		}
-		get_z_values(arr, vars, split, i);
+		get_z_values(vars, split, i);
 		free(split);
 		i++;
 		lines = lines->next;
 	}
-	return (arr);
 }
 
-t_point	**arr_from_file(char *filename, t_vars *vars)
+void	arr_from_file(char *filename, t_vars *vars)
 {
 	int		fd;
 	t_list	*lines;
-	t_point	**arr;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		die(USAGE);
-	lines = read_lines(fd);
-	arr = parse_lines(lines, vars, NULL, NULL);
+		die("Error: Unable to open file\n", vars);
+	vars->lines = read_lines(fd, vars);
+	parse_lines(vars->lines, vars);
 	ft_lstdel(&lines, del);
 	close(fd);
-	return (arr);
 }

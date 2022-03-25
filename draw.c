@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 21:27:36 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/23 00:05:24 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/25 19:58:35 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	draw(t_vars *vars, t_point **arr)
 		{
 			if (j > 0)
 				draw_line(line(arr[i * vars->n_cols + j - 1],
-						arr[i * vars->n_cols + j]), vars);
+						arr[i * vars->n_cols + j], NULL), vars);
 			if (i > 0)
 				draw_line(line(arr[(i - 1) * vars->n_cols + j],
-						arr[i * vars->n_cols + j]), vars);
+						arr[i * vars->n_cols + j], NULL), vars);
 			j++;
 		}
 		i++;

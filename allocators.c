@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 18:39:14 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/25 14:12:12 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/25 19:58:04 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_point	*point(int x, int y, int z, t_vars *vars)
 	(void) vars;
 	p = (t_point *) malloc(sizeof (t_point));
 	if (!p)
-		die("Couldn't allocate memory for point.");
+		return (NULL);
 	ft_bzero(p, sizeof (t_point));
 	p->x = (double) x;
 	p->y = (double) y;
@@ -45,6 +45,19 @@ t_point	*point(int x, int y, int z, t_vars *vars)
 	p->orig_y = (double) y;
 	p->orig_z = (double) z;
 	return (p);
+}
+
+t_point	**point_array(int n_rows, int n_cols)
+{
+	t_point	**arr;
+	size_t	size;
+
+	size = (n_rows * n_cols + 1) * sizeof (t_point **);
+	arr = (t_point **) malloc(size);
+	if (!arr)
+		return (NULL);
+	ft_bzero(arr, size);
+	return (arr);
 }
 
 t_vars	*init_vars(void)
@@ -67,10 +80,8 @@ t_vars	*init_vars(void)
 	return (vars);
 }
 
-t_line	*line(t_point *a, t_point *b)
+t_line	*line(t_point *a, t_point *b, t_line *line)
 {
-	t_line	*line;
-
 	line = (t_line *) malloc(sizeof (t_line));
 	if (!line)
 		return (NULL);
