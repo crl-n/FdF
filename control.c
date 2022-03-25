@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:03:37 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/24 21:56:18 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/24 23:57:33 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ static void	refresh(t_vars *vars)
 
 static void	adjust_fov(t_vars *vars, int key)
 {
-	if (vars->fov < 5.0 && key == 0x20)
+	if (vars->fov < 5.0 && key == KEY_G)
 		vars->fov += 0.1 / tan(1.0 / 2.0);
-	if (vars->fov > 0.0 && key == 0x22)
+	if (vars->fov > 0.0 && key == KEY_H)
 		vars->fov -= 0.1 / tan(1.0 / 2.0);
 }
 
@@ -69,7 +69,6 @@ int	key_event(int key, t_vars *vars)
 		rotate(vars->arr, key);
 	else if (key == 0xc)
 		vars->color = vars->color ^ 1;
-	printf("color %d", vars->color);
 	refresh(vars);
 	return (0);
 }

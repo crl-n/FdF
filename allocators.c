@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 18:39:14 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/24 22:14:16 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/25 14:12:12 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ t_point	*point(int x, int y, int z, t_vars *vars)
 	p->x = (double) x;
 	p->y = (double) y;
 	p->z = (double) z;
+	p->orig_x = (double) x;
+	p->orig_y = (double) y;
 	p->orig_z = (double) z;
 	return (p);
 }

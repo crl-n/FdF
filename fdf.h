@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/24 22:13:37 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/25 14:26:37 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ typedef struct s_point
 	double	x;
 	double	y;
 	double	z;
+	double	orig_x;
+	double	orig_y;
 	double	orig_z;
 	double	px;
 	double	py;
@@ -63,6 +65,7 @@ typedef struct s_vars
 	int		n_cols;
 	double	max_z;
 	double	min_z;
+	double	z_offset;
 	double	step_z;
 	double	fov;
 	double	ar;
@@ -89,8 +92,10 @@ typedef struct s_line
 }	t_line;
 
 t_point	**arr_from_file(char *filename, t_vars *vars);
+void	center_z_values(t_vars *vars);
 void	clear_img(t_img *img);
 void	del(void *content, size_t content_size);
+double	deg_to_rad(double deg);
 void	die(char *message);
 void	draw(t_vars *vars, t_point **arr);
 void	draw_line(t_line *line, t_vars *vars);

@@ -6,13 +6,23 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 14:51:04 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/23 17:26:36 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/25 12:18:55 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <math.h>
 #include <stdio.h>
+
+double	deg_to_rad(double deg)
+{
+	return (deg * (M_PI / 180)); 
+}
+
+double	rad_to_deg(double rad)
+{
+	return (rad * (180 / M_PI)); 
+}
 
 static void	rotate_x(t_point **arr, double theta)
 {
@@ -73,8 +83,14 @@ static void	rotate_z(t_point **arr, double theta)
 
 void	rotate(t_point **arr, int keycode)
 {
+	static double	rot_x = 0.0;
+
 	if (keycode == KEY_T)
+	{
 		rotate_x(arr, ROT_THETA);
+		rot_x += rad_to_deg(ROT_THETA);
+		printf("x rot: %f\n", rot_x);
+	}
 	else if (keycode == KEY_Y)
 		rotate_x(arr, -ROT_THETA);
 	else if (keycode == KEY_U)

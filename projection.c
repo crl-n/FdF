@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 22:21:56 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/24 22:18:53 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/25 14:30:28 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,66 +16,27 @@
 
 #include <stdio.h>
 
-static void	iso(t_point *p)
+static void	iso(t_point *p, t_vars *vars)
 {
-	p->px = (p->x - p->y) * -cos(0.52356);
-	p->py = (p->x + p->y) * sin(0.52356) - p->z;
+	double	theta;
+
+	theta = 0.52356;
+	p->px = (p->x - p->y) * cos(theta);
+	p->py = (p->x + p->y) * sin(theta) - p->z + vars->z_offset;
 	p->pz = p->z;
 }
-
-static double	norm(double v)
-{
-	double	nv;
-	double	origin;
-
-	origin = (double)(WIDTH / 2 - 1);
-	nv = (v - origin) / origin;
-	return (nv);
-}
-/*
-static double	denorm(double nv)
-{
-	double	v;
-	double	origin;
-
-	printf("nv %f ", nv);
-	origin = (double)(WIDTH / 2 - 1);
-	v = nv * origin + origin;
-	printf("v: %f\n", v);
-	return (v);
-}
-*/
 
 static void	perspective(t_point *p, t_vars *vars)
 {
-	double	zn;
-	double	zf;
-
-	(void) vars;
-	zn = norm(20.0);
-	zf = norm(200.0);
-	//p->px = norm(p->x);
-	//p->py = norm(p->y);
-	//p->pz = norm(p->z);
-	p->px = p->x;
-	p->py = p->y;
-	p->pz = p->z;
+	p->px = p->orig_x;
+	p->py = p->orig_y;
+	p->pz = p->orig_z;
 	p->px *= vars->ar * vars->fov;
 	if (p->z != 0.0)
-		p->px /= (p->z * 0.15);
+		p->px *= (p->pz * 0.1);
 	p->py *= vars->fov;
 	if (p->z != 0.0)
-		p->py /= (p->z * 0.15);
-	/*
-	p->pz *= (zf + zn) / (zf - zn);
-	p->pz *= (2.0 * zn * zf) / (zn - zf);
-	printf("x ");
-	p->px = denorm(p->px);
-	printf("y ");
-	p->py = denorm(p->py);
-	printf("z ");
-	p->pz = denorm(p->pz);
-	*/
+		p->py *= (p->pz * 0.1);
 }
 
 void	project(t_point **arr, t_vars *vars)
@@ -87,13 +48,15 @@ void	project(t_point **arr, t_vars *vars)
 	while (i < vars->n_rows * vars->n_cols)
 	{
 		p = arr[i++];
+		printf("x %f y %f z %f\n", p->x, p->y, p->z);
 		if (vars->persp)
 			perspective(p, vars);
 		else
-			iso(p);
+			iso(p, vars);
 		p->px *= vars->zoom;
 		p->py *= vars->zoom;
 		p->px += vars->pan_x;
 		p->py += vars->pan_y;
 	}
+	printf("END\n");
 }

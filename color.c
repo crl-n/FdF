@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:08:43 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/24 21:57:28 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/25 14:26:19 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	get_color(double z, t_vars *vars)
 
 	if (!vars->color)
 		return (0xFFFFFF);
-	i = vars->min_z;
+	i = vars->min_z + vars->z_offset;
 	color = START_COLOR;
 	while (i <= z)
 	{
