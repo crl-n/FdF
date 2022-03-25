@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/25 20:31:53 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/25 21:57:50 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_vars
 	void	*win;
 	void	*mlx;
 	t_img	*img;
+	t_img	*menu;
 	t_point	**arr;
 	t_list	*lines;
 	int		iso : 1;

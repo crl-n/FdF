@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:46:41 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/25 19:46:32 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/25 22:03:25 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,9 @@ static void	parse_lines(t_list *lines, t_vars *vars)
 	{
 		split = ft_strsplit(lines->content, ' ');
 		if (!split)
-			die("Error: Input contained an empty line.\n", vars);
+			die("Error: Failed to split row string.\n", vars);
+		if (ft_strcmp("", split[0]) == 0)
+			die("Error: Input contains empty line.\n", vars);
 		if (i == 0)
 		{
 			set_vars(ft_lstsize(lines), split, vars);
@@ -113,6 +115,8 @@ void	arr_from_file(char *filename, t_vars *vars)
 	if (fd < 0)
 		die("Error: Unable to open file\n", vars);
 	vars->lines = read_lines(fd, vars);
+	if (!vars->lines)
+		die("Error: No lines could be read from file.\n", vars);
 	parse_lines(vars->lines, vars);
 	ft_lstdel(&lines, del);
 	close(fd);

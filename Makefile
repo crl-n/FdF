@@ -4,7 +4,7 @@
 NAME = fdf
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 ifneq ("$(wildcard /usr/local/lib/libmlx.a)", "")
 LIB = -L/usr/local/lib -lmlx

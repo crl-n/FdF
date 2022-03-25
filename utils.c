@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_util.c                                       :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 09:28:44 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/25 19:47:32 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/25 20:50:15 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 void	del(void *content, size_t content_size)
 {
 	(void) content_size;
-	free(content);
+	if (content)
+		free(content);
 }
 
 void	center_z_values(t_vars *vars)

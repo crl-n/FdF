@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:03:37 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/25 20:36:00 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/25 22:06:11 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	key_event(int key, t_vars *vars)
 {
 	if (key == 0x35)
 		die("", vars);
-	if (key == 0x26 && vars->zoom > -100.0)
+	if (key == 0x26 && vars->zoom > 1.0)
 		vars->zoom--;
 	else if (key == 0x28 && vars->zoom < 100.0)
 		vars->zoom++;

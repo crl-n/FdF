@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:21:23 by cnysten           #+#    #+#             */
-/*   Updated: 2022/03/25 20:17:26 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/25 21:58:15 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ void	die(char *message, t_vars *vars)
 	size_t	i;
 
 	ft_putstr(message);
-	mlx_destroy_image(vars->mlx, vars->img);
-	mlx_destroy_window(vars->mlx, vars->win);
+	if (vars->mlx && vars->img)
+		mlx_destroy_image(vars->mlx, vars->img);
+	if (vars->mlx && vars->win)
+		mlx_destroy_window(vars->mlx, vars->win);
 	ft_lstdel(&(vars->lines), del);
 	if (vars->arr)
 	{
@@ -48,8 +50,9 @@ int	main(int argc, char **argv)
 		return (0);
 	vars->mlx = mlx_init();
 	vars->win = mlx_new_window(vars->mlx, WIDTH, HEIGHT, "fdf");
-	arr_from_file(argv[1], vars);
 	vars->img = image(vars->mlx);
+	vars->menu = image(vars->mlx);
+	arr_from_file(argv[1], vars);
 	set_color_step(vars);
 	center_z_values(vars);
 	project(vars->arr, vars);
