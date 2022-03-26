@@ -6,7 +6,7 @@
 /*   By: cnysten <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:19:11 by cnysten           #+#    #+#             */
-/*   Updated: 2022/01/13 20:54:01 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/03/26 13:38:38 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static size_t	word_len(char const *s, char c)
 	size_t	len;
 
 	len = 0;
-	while (*s != c)
+	while (*s && *s != c)
 	{
 		len++;
 		s++;
@@ -50,9 +50,9 @@ static size_t	word_len(char const *s, char c)
 
 static const char	*goto_next_word(const char *s, char c)
 {
-	while (*s != c)
+	while (*s && *s != c)
 		s++;
-	while (*s == c)
+	while (*s && *s == c)
 		s++;
 	return (s);
 }

@@ -6,7 +6,7 @@
 /*   By: cnysten <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:47:53 by cnysten           #+#    #+#             */
-/*   Updated: 2022/01/13 21:02:58 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/03/26 15:08:16 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,21 @@
 
 void	ft_lstdel(t_list **alst, void (*del)(void *, size_t))
 {
+	t_list	*node;
 	t_list	*next;
 
 	if (!alst || !del)
 		return ;
-	if (*alst)
+	node = *alst;
+	while (node)
 	{
-		next = (*alst)->next;
-		if (next)
-			ft_lstdel(&next, del);
-		del((*alst)->content, (*alst)->content_size);
-		free(*alst);
-		*alst = NULL;
+		del(node->content, node->content_size);
+		if (node->next)
+			next = node->next;
+		else
+			next = NULL;
+		free(node);
+		node = next;
 	}
+	*alst = NULL;
 }

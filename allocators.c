@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 18:39:14 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/25 19:58:04 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/26 16:35:45 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,9 @@ t_vars	*init_vars(void)
 	ft_bzero(vars, sizeof (t_vars));
 	vars->iso = 1;
 	vars->persp = 0;
-	vars->fov = 1.0 / tan(1.0 / 2.0);
-	vars->ar = WIDTH / HEIGHT;
+	vars->fov_theta = 1.0;
+	vars->fov = 1.0 / tan(vars->fov_theta / 2.0);
+	vars->ar = (double) WIDTH / (double) HEIGHT;
 	vars->zoom = 10.0;
 	vars->pan_x = (double) WIDTH / 2.0;
 	vars->pan_y = (double) HEIGHT / 2.0;
