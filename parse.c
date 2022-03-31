@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:46:41 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/25 22:03:25 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/26 19:51:19 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static t_list	*read_lines(int fd, t_vars *vars)
 	char	*line;
 	int		gnl_ret;
 
+	lines = NULL;
 	while (1)
 	{
 		gnl_ret = get_next_line(fd, &line);
