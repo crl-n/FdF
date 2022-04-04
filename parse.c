@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:46:41 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/26 19:51:19 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/26 15:05:16 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static void	parse_lines(t_list *lines, t_vars *vars)
 				die("Error: Failed to create array of points\n", vars);
 		}
 		get_z_values(vars, split, i);
-		free(split);
+		free_split(&split);
 		i++;
 		lines = lines->next;
 	}
@@ -110,7 +110,6 @@ static void	parse_lines(t_list *lines, t_vars *vars)
 void	arr_from_file(char *filename, t_vars *vars)
 {
 	int		fd;
-	t_list	*lines;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
@@ -119,6 +118,8 @@ void	arr_from_file(char *filename, t_vars *vars)
 	if (!vars->lines)
 		die("Error: No lines could be read from file.\n", vars);
 	parse_lines(vars->lines, vars);
-	ft_lstdel(&lines, del);
+	set_color_step(vars);
+	center_z_values(vars);
+	ft_lstdel(&vars->lines, del);
 	close(fd);
 }

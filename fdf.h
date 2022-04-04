@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 09:24:35 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/25 21:57:50 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/26 16:28:40 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <string.h>
 # include "libft.h"
+
 # define USAGE "Usage : ./fdf <filename>\n"
 # define WIDTH 1080
 # define HEIGHT 720
@@ -56,7 +57,6 @@ typedef struct s_vars
 	void	*win;
 	void	*mlx;
 	t_img	*img;
-	t_img	*menu;
 	t_point	**arr;
 	t_list	*lines;
 	int		iso : 1;
@@ -69,6 +69,7 @@ typedef struct s_vars
 	double	z_offset;
 	double	step_z;
 	double	fov;
+	double	fov_theta;
 	double	ar;
 	double	zoom;
 	double	pan_x;
@@ -101,6 +102,7 @@ void	die(char *message, t_vars *vars);
 void	draw(t_vars *vars, t_point **arr);
 void	draw_line(t_line *line, t_vars *vars);
 void	draw_menu(t_vars *vars);
+void	free_split(char ***adr);
 int		get_color(double z, t_vars *vars);
 t_img	*image(void *img);
 t_vars	*init_vars(void);

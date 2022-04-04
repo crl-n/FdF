@@ -39,6 +39,9 @@ $(OBJ): $(SRC)
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIB) $(FW)
 
+leaks: $(OBJ)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIB) $(FW) -fsanitize=address
+
 clean:
 	-/bin/rm $(OBJ)
 	@make -C ./libft clean

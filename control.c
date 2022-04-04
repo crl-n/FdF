@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:03:37 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/25 22:06:11 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/26 16:33:55 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ static void	refresh(t_vars *vars)
 
 static void	adjust_fov(t_vars *vars, int key)
 {
-	if (vars->fov < 5.0 && key == KEY_G)
-		vars->fov += 0.1 / tan(1.0 / 2.0);
-	if (vars->fov > 0.0 && key == KEY_H)
-		vars->fov -= 0.1 / tan(1.0 / 2.0);
+	if (vars->fov_theta < 1.5 && key == KEY_G)
+		vars->fov_theta += 0.1;
+	if (vars->fov_theta > 0.5 && key == KEY_H)
+		vars->fov_theta -= 0.1;
+	vars->fov = 1.0 / tan(vars->fov_theta / 2.0);
 }
 
 static void	adjust_pan(t_vars *vars, int key)
@@ -46,9 +47,11 @@ int	key_event(int key, t_vars *vars)
 {
 	if (key == 0x35)
 		die("", vars);
-	if (key == 0x26 && vars->zoom > 1.0)
+	else if (key == 0x26 && vars->zoom > 1.0)
 		vars->zoom--;
-	else if (key == 0x28 && vars->zoom < 100.0)
+	else if (key == 0x26 && vars->zoom > 0.1)
+		vars->zoom -= 0.1;
+	else if (key == 0x28 && vars->zoom < 40.0)
 		vars->zoom++;
 	else if (key == 0xd || key == 0x1 || key == 0x0 || key == 0x2)
 		adjust_pan(vars, key);
